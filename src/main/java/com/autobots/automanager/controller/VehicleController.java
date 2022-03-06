@@ -24,6 +24,8 @@ public class VehicleController {
 	private VehicleRepository vehicleRepository;
 	@Autowired
 	private VehiclePicker vehiclePicker;
+	@Autowired
+	private VehicleUpdater vehicleUpdater;
 
 	@GetMapping("/")
 	public List<Vehicle> getVehicles() {
@@ -45,7 +47,6 @@ public class VehicleController {
 	@PutMapping("/update")
 	public void updateVehicle(@RequestBody Vehicle updatedVehicle) {
 		Vehicle vehicle = vehicleRepository.getById(updatedVehicle.getId());
-		VehicleUpdater vehicleUpdater = new VehicleUpdater();
 		vehicleUpdater.update(vehicle, updatedVehicle);
 		vehicleRepository.save(vehicle);
 	}

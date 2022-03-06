@@ -24,6 +24,8 @@ public class CustomerController {
 	private CustomerRepository customerRepository;
 	@Autowired
 	private CustomerPicker customerPicker;
+	@Autowired
+	private CustomerUpdater customerUpdater;
 
 	@GetMapping("/")
 	public List<Customer> getCustomers() {
@@ -45,7 +47,6 @@ public class CustomerController {
 	@PutMapping("/update")
 	public void updateCustomer(@RequestBody Customer updatedCustomer) {
 		Customer customer = customerRepository.getById(updatedCustomer.getId());
-		CustomerUpdater customerUpdater = new CustomerUpdater();
 		customerUpdater.update(customer, updatedCustomer);
 		customerRepository.save(customer);
 	}

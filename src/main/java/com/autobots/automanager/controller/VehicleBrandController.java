@@ -24,6 +24,8 @@ public class VehicleBrandController {
 	private VehicleBrandRepository vehicleBrandRepository;
 	@Autowired
 	private VehicleBrandPicker vehicleBrandPicker;
+	@Autowired
+	private VehicleBrandUpdater vehicleBrandUpdater;
 
 	@GetMapping("/")
 	public List<VehicleBrand> getVehicleBrands() {
@@ -45,7 +47,6 @@ public class VehicleBrandController {
 	@PutMapping("/update")
 	public void updateVehicleBrand(@RequestBody VehicleBrand updatedVehicleBrand) {
 		VehicleBrand vehicleBrand = vehicleBrandRepository.getById(updatedVehicleBrand.getId());
-		VehicleBrandUpdater vehicleBrandUpdater = new VehicleBrandUpdater();
 		vehicleBrandUpdater.update(vehicleBrand, updatedVehicleBrand);
 		vehicleBrandRepository.save(vehicleBrand);
 	}
