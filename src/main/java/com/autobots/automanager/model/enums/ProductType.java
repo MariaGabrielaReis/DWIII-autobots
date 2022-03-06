@@ -2,7 +2,7 @@ package com.autobots.automanager.model.enums;
 
 public enum ProductType {
   oil: "Óleo",
-  filter: "Filtro de ar",
+  filter: "Filtro",
   lamp: "Lâmpada",
   other: "Outros",
 }

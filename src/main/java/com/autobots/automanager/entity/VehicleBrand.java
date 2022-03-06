@@ -23,7 +23,7 @@ public class VehicleBrand {
 	private Long id;
 	@Column(nullable = false)
 	private String name;
-	@Column(nullable = true)
+	@Column(nullable = false)
 	private List<ProductBrand> approvedOilBrands;
 
 	// Brands of filter approved
