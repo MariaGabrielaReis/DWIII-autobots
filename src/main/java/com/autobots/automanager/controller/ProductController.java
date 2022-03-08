@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.autobots.automanager.entity.Product;
 import com.autobots.automanager.model.product.ProductUpdater;
-import com.autobots.automanager.model.product.ProductPicker;
 import com.autobots.automanager.repository.ProductRepository;
 
 @RestController
@@ -22,8 +21,6 @@ import com.autobots.automanager.repository.ProductRepository;
 public class ProductController {
 	@Autowired
 	private ProductRepository productRepository;
-	@Autowired
-	private ProductPicker productPicker;
 	@Autowired
 	private ProductUpdater productUpdater;
 
@@ -35,8 +32,8 @@ public class ProductController {
 
 	@GetMapping("/{id}")
 	public Product getProduct(@PathVariable long id) {
-		List<Product> products = productRepository.findAll();
-		return productPicker.select(products, id);
+		Product product = productRepository.getById(id);
+		return product;
 	}
 
 	@PostMapping("/create")

@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.autobots.automanager.entity.Vehicle;
 import com.autobots.automanager.model.vehicle.VehicleUpdater;
-import com.autobots.automanager.model.vehicle.VehiclePicker;
 import com.autobots.automanager.repository.VehicleRepository;
 
 @RestController
@@ -22,8 +21,6 @@ import com.autobots.automanager.repository.VehicleRepository;
 public class VehicleController {
 	@Autowired
 	private VehicleRepository vehicleRepository;
-	@Autowired
-	private VehiclePicker vehiclePicker;
 	@Autowired
 	private VehicleUpdater vehicleUpdater;
 
@@ -35,8 +32,8 @@ public class VehicleController {
 
 	@GetMapping("/{id}")
 	public Vehicle getVehicle(@PathVariable long id) {
-		List<Vehicle> vehicles = vehicleRepository.findAll();
-		return vehiclePicker.select(vehicles, id);
+	Vehicle vehicle = vehicleRepository.getById(id);
+		return vehicle;
 	}
 
 	@PostMapping("/create")

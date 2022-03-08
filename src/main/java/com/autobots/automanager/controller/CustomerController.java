@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.autobots.automanager.entity.Customer;
 import com.autobots.automanager.model.customer.CustomerUpdater;
-import com.autobots.automanager.model.customer.CustomerPicker;
 import com.autobots.automanager.repository.CustomerRepository;
 
 @RestController
@@ -22,8 +21,6 @@ import com.autobots.automanager.repository.CustomerRepository;
 public class CustomerController {
 	@Autowired
 	private CustomerRepository customerRepository;
-	@Autowired
-	private CustomerPicker customerPicker;
 	@Autowired
 	private CustomerUpdater customerUpdater;
 
@@ -35,8 +32,8 @@ public class CustomerController {
 
 	@GetMapping("/{id}")
 	public Customer getCustomer(@PathVariable long id) {
-		List<Customer> customers = customerRepository.findAll();
-		return customerPicker.select(customers, id);
+		Customer customer = customerRepository.getById(id);
+		return customer;
 	}
 
 	@PostMapping("/create")
