@@ -11,9 +11,7 @@
 <span id="projeto">
   
 # :bookmark_tabs: Sobre o projeto
-Este é um sistema para gerenciamento de uma loja de autopeças, consistindo-se de um microsserviço construído em Java com Spring utilizando SOLID e padrões de 
-projeto adequados que possibilita listagem, cadastro, exclusão e alteração de informações sobre clientes, produtos, serviços, veículos, marcas e serviços 
-realizados.
+Este é um sistema para gerenciamento de uma loja de autopeças que consiste em uma API baseada na arquitetura de microsserviço com Java, aplicando conceitos do SOLID e padrões de projeto adequados que possibilitam listagem, cadastro, exclusão e alteração de informações sobre clientes, produtos, serviços, veículos e marcas de veículos.
 
 ## :railway_track: Rotas disponíveis para operações de gerenciamento
 <div align="center">
