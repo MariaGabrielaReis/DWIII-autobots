@@ -3,6 +3,8 @@ package com.autobots.automanager.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.autobots.automanager.entity.Product;
+import com.autobots.automanager.model.product.ProductAdderLink;
 import com.autobots.automanager.model.product.ProductUpdater;
 import com.autobots.automanager.repository.ProductRepository;
 
@@ -22,35 +25,72 @@ public class ProductController {
 	@Autowired
 	private ProductRepository productRepository;
 	@Autowired
+	private ProductAdderLink productAdderLink;
+	@Autowired
 	private ProductUpdater productUpdater;
 
 	@GetMapping("/")
 	public List<Product> getproducts() {
 		List<Product> products = productRepository.findAll();
-		return products;
+		
+		HttpStatus status = HttpStatus.NOT_FOUND;
+		// PODE DAR ERRO, TIPO DE LISTA, MAS E SE NÃO TIVER LISTA???
+		ResponseEntity<List<Product>> response = new ResponseEntity<>(status);
+		if (products.isNotEmpty()) {
+			status = HttpStatus.FOUND;
+			productAdderLink.addLink(products);
+			response = new ResponseEntity<List<Product>>(products, status);
+		}
+		return response;
 	}
 
 	@GetMapping("/{id}")
 	public Product getProduct(@PathVariable long id) {
 		Product product = productRepository.getById(id);
-		return product;
+
+		HttpStatus status = HttpStatus.NOT_FOUND;
+		// PODE DAR ERRO, TIPO "PRODUCT", MAS E SE NÃO TIVER CLIENTE???
+		ResponseEntity<Product> response = new ResponseEntity<>(status);
+		if (product != null) {
+			status = HttpStatus.FOUND;
+			productAdderLink.addLink(product);
+			response = new ResponseEntity<Product>(product, status);
+		}	
+		return response;
 	}
 
 	@PostMapping("/create")
 	public void createProduct(@RequestBody Product product) {
-		productRepository.save(product);
+		HttpStatus status = HttpStatus.CONFLICT;
+		if(product.getId() == null){
+			productRepository.save(product);
+			status = HttpStatus.CREATED;
+		}
+		return new ResponseEntity<>(status);
 	}
 
 	@PutMapping("/update")
 	public void updateProduct(@RequestBody Product updatedProduct) {
 		Product product = productRepository.getById(updatedProduct.getId());
-		productUpdater.update(product, updatedProduct);
-		productRepository.save(product);
+
+		HttpStatus status = HttpStatus.BAD_REQUEST;
+		if(product != null){
+			status = HttpStatus.OK;
+			productUpdater.update(product, updatedproduct);
+			productRepository.save(product);
+		}
+		return new ResponseEntity<>(status);
 	}
 
 	@DeleteMapping("/delete")
 	public void deleteProduct(@RequestBody Product deletedProduct) {
 		Product product = productRepository.getById(deletedProduct.getId());
-		productRepository.delete(product);
+	
+		HttpStatus status = HttpStatus.BAD_REQUEST;
+		if(product != null){
+			status = HttpStatus.OK;
+			productRepository.delete(product);
+		}
+		return new ResponseEntity<>(status);
 	}
 }
