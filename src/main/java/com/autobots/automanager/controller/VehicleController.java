@@ -3,6 +3,8 @@ package com.autobots.automanager.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.autobots.automanager.entity.Vehicle;
+import com.autobots.automanager.model.vehicle.VehicleAdderLink;
 import com.autobots.automanager.model.vehicle.VehicleUpdater;
 import com.autobots.automanager.repository.VehicleRepository;
 
@@ -22,35 +25,72 @@ public class VehicleController {
 	@Autowired
 	private VehicleRepository vehicleRepository;
 	@Autowired
+	private VehicleAdderLink vehicleAdderLink;
+	@Autowired
 	private VehicleUpdater vehicleUpdater;
 
 	@GetMapping("/")
 	public List<Vehicle> getVehicles() {
 		List<Vehicle> vehicles = vehicleRepository.findAll();
-		return vehicles;
+		
+		HttpStatus status = HttpStatus.NOT_FOUND;
+		// PODE DAR ERRO, TIPO DE LISTA, MAS E SE NÃO TIVER LISTA???
+		ResponseEntity<List<Vehicle>> response = new ResponseEntity<>(status);
+		if (vehicles.isNotEmpty()) {
+			status = HttpStatus.FOUND;
+			vehicleAdderLink.addLink(vehicles);
+			response = new ResponseEntity<List<Vehicle>>(vehicles, status);
+		}	
+		return response;
 	}
 
 	@GetMapping("/{id}")
 	public Vehicle getVehicle(@PathVariable long id) {
-	Vehicle vehicle = vehicleRepository.getById(id);
-		return vehicle;
+		Vehicle vehicle = vehicleRepository.getById(id);
+		
+		HttpStatus status = HttpStatus.NOT_FOUND;
+		// PODE DAR ERRO, TIPO "vehicle", MAS E SE NÃO TIVER CLIENTE???
+		ResponseEntity<Vehicle> response = new ResponseEntity<>(status);
+		if (vehicle != null) {
+			status = HttpStatus.FOUND;
+			vehicleAdderLink.addLink(vehicle);
+			response = new ResponseEntity<Vehicle>(vehicle, status);
+		}	
+		return response;
 	}
 
 	@PostMapping("/create")
 	public void createVehicle(@RequestBody Vehicle vehicle) {
-		vehicleRepository.save(vehicle);
+		HttpStatus status = HttpStatus.CONFLICT;
+		if(vehicle.getId() == null){
+			vehicleRepository.save(vehicle);
+			status = HttpStatus.CREATED;
+		}
+		return new ResponseEntity<>(status);
 	}
 
 	@PutMapping("/update")
 	public void updateVehicle(@RequestBody Vehicle updatedVehicle) {
 		Vehicle vehicle = vehicleRepository.getById(updatedVehicle.getId());
-		vehicleUpdater.update(vehicle, updatedVehicle);
-		vehicleRepository.save(vehicle);
+
+		HttpStatus status = HttpStatus.BAD_REQUEST;
+		if(vehicle != null){
+			status = HttpStatus.OK;
+			vehicleUpdater.update(vehicle, updatedVehicle);
+			vehicleRepository.save(vehicle);
+		}
+		return new ResponseEntity<>(status);
 	}
 
 	@DeleteMapping("/delete")
 	public void deleteVehicle(@RequestBody Vehicle deletedVehicle) {
 		Vehicle vehicle = vehicleRepository.getById(deletedVehicle.getId());
-		vehicleRepository.delete(vehicle);
+
+		HttpStatus status = HttpStatus.BAD_REQUEST;
+		if(vehicle != null){
+			status = HttpStatus.OK;
+			vehicleRepository.delete(vehicle);
+		}
+		return new ResponseEntity<>(status);
 	}
 }
