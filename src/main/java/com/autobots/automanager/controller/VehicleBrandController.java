@@ -30,13 +30,12 @@ public class VehicleBrandController {
 	private VehicleBrandUpdater vehicleBrandUpdater;
 
 	@GetMapping("/")
-	public List<VehicleBrand> getVehicleBrands() {
+	public ResponseEntity<List<VehicleBrand>> getVehicleBrands() {
 		List<VehicleBrand> vehicleBrands = vehicleBrandRepository.findAll();
 		
 		HttpStatus status = HttpStatus.NOT_FOUND;
-		// PODE DAR ERRO, TIPO DE LISTA, MAS E SE NÃO TIVER LISTA???
 		ResponseEntity<List<VehicleBrand>> response = new ResponseEntity<>(status);
-		if (vehicleBrands.isNotEmpty()) {
+		if (!vehicleBrands.isEmpty()) {
 			status = HttpStatus.FOUND;
 			vehicleBrandAdderLink.addLink(vehicleBrands);
 			response = new ResponseEntity<List<VehicleBrand>>(vehicleBrands, status);
@@ -45,11 +44,10 @@ public class VehicleBrandController {
 	}
 
 	@GetMapping("/{id}")
-	public VehicleBrand getVehicleBrand(@PathVariable long id) {
+	public ResponseEntity<VehicleBrand> getVehicleBrand(@PathVariable long id) {
 		VehicleBrand vehicleBrand = vehicleBrandRepository.getById(id);
 		
 		HttpStatus status = HttpStatus.NOT_FOUND;
-		// PODE DAR ERRO, TIPO "VehicleBrand", MAS E SE NÃO TIVER CLIENTE???
 		ResponseEntity<VehicleBrand> response = new ResponseEntity<>(status);
 		if (vehicleBrand != null) {
 			status = HttpStatus.FOUND;
@@ -60,7 +58,7 @@ public class VehicleBrandController {
 	}
 
 	@PostMapping("/create")
-	public void createVehicleBrand(@RequestBody VehicleBrand vehicleBrand) {
+	public ResponseEntity<HttpStatus> createVehicleBrand(@RequestBody VehicleBrand vehicleBrand) {
 		HttpStatus status = HttpStatus.CONFLICT;
 		if(vehicleBrand.getId() == null){
 			vehicleBrandRepository.save(vehicleBrand);
@@ -70,7 +68,7 @@ public class VehicleBrandController {
 	}
 
 	@PutMapping("/update")
-	public void updateVehicleBrand(@RequestBody VehicleBrand updatedVehicleBrand) {
+	public ResponseEntity<HttpStatus> updateVehicleBrand(@RequestBody VehicleBrand updatedVehicleBrand) {
 		VehicleBrand vehicleBrand = vehicleBrandRepository.getById(updatedVehicleBrand.getId());
 		
 		HttpStatus status = HttpStatus.BAD_REQUEST;
@@ -83,7 +81,7 @@ public class VehicleBrandController {
 	}
 
 	@DeleteMapping("/delete")
-	public void deleteVehicleBrand(@RequestBody VehicleBrand deletedVehicleBrand) {
+	public ResponseEntity<HttpStatus> deleteVehicleBrand(@RequestBody VehicleBrand deletedVehicleBrand) {
 		VehicleBrand vehicleBrand = vehicleBrandRepository.getById(deletedVehicleBrand.getId());
 
 		HttpStatus status = HttpStatus.BAD_REQUEST;

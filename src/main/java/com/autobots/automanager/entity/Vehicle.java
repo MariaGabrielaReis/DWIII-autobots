@@ -1,10 +1,5 @@
 package com.autobots.automanager.entity;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,23 +7,25 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import com.autobots.automanager.entity.Customer;
-import com.autobots.automanager.entity.VehicleBrand;
+import org.springframework.hateoas.RepresentationModel;
+
 import com.autobots.automanager.model.enums.Regime;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @Entity
-public class Vehicle {
+public class Vehicle extends RepresentationModel<Vehicle> {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@OneToMany(nullable = false)
+	@OneToMany()
 	private Customer owner;
 	@Column(unique = true, nullable = false)
 	private String licensePlate;
-	@OneToMany(nullable = false)
+	@OneToMany()
 	private VehicleBrand brand;
 	@Column(nullable = false)
 	private String model;

@@ -10,8 +10,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Component;
 
 import com.autobots.automanager.entity.Customer;
-import com.autobots.automanager.entity.Address;
-import com.autobots.automanager.entity.Phone;
 import com.autobots.automanager.repository.CustomerRepository;
 
 @SpringBootApplication
@@ -37,22 +35,14 @@ public class AutomanagerApplication {
 			newCustomer.setRegistrationDate(Calendar.getInstance().getTime());
 			newCustomer.setBirthDate(calendar.getTime());
 			newCustomer.setNickname("Maby");
-
-			Phone phone = new Phone();
-			phone.setDdd("21");
-			phone.setNumber("981234576");
-			newCustomer.getPhones().add(phone);
-
-			Address address = new Address();
-			address.setState("Rio de Janeiro");
-			address.setCity("Rio de Janeiro");
-			address.setDistrict("Botafogo");
-			address.setStreet("Av. Pasteur");
-			address.setNumber("154");
-			address.setZipCode("22290-240");
-			address.setComplement("Centro Corporativo SOMA, só passa com crachá");
-			newCustomer.setAddress(address);
-
+			newCustomer.setPhone(21981234576L);
+			newCustomer.setState("Rio de Janeiro");
+			newCustomer.setCity("Rio de Janeiro");
+			newCustomer.setDistrict("Botafogo");
+			newCustomer.setStreet("Av. Pasteur");
+			newCustomer.setNumber(154);
+			newCustomer.setZipCode(22290240);
+			newCustomer.setComplement("Centro Corporativo SOMA, só passa com crachá");
 			customerRepository.save(newCustomer);
 
 			// Customer 2
@@ -61,16 +51,13 @@ public class AutomanagerApplication {
 			newCustomer.setRegistrationDate(Calendar.getInstance().getTime());
 			newCustomer.setBirthDate(calendar.getTime());
 			newCustomer.setNickname("Gol do Flamengo");
-
-			Address address = new Address();
-			address.setState("São Paulo");
-			address.setCity("Monteiro Lobato");
-			address.setDistrict("Pamonha");
-			address.setStreet("Rua do Milho");
-			address.setNumber("1111");
-			address.setZipCode("11111-111");
-			address.setComplement("Não tem campainha, pode gritar");
-			newCustomer.setAddress(address);
+			newCustomer.setState("São Paulo");
+			newCustomer.setCity("Monteiro Lobato");
+			newCustomer.setDistrict("Pamonha");
+			newCustomer.setStreet("Rua do Milho");
+			newCustomer.setNumber(1111);
+			newCustomer.setZipCode(11111111);
+			newCustomer.setComplement("Não tem campainha, pode gritar");
 	
 			customerRepository.save(newCustomer);
 		}

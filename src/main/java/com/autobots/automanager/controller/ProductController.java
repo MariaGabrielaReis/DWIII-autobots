@@ -30,13 +30,12 @@ public class ProductController {
 	private ProductUpdater productUpdater;
 
 	@GetMapping("/")
-	public List<Product> getproducts() {
+	public  ResponseEntity<List<Product>> getProducts() {
 		List<Product> products = productRepository.findAll();
 		
 		HttpStatus status = HttpStatus.NOT_FOUND;
-		// PODE DAR ERRO, TIPO DE LISTA, MAS E SE NÃO TIVER LISTA???
 		ResponseEntity<List<Product>> response = new ResponseEntity<>(status);
-		if (products.isNotEmpty()) {
+		if (!products.isEmpty()) {
 			status = HttpStatus.FOUND;
 			productAdderLink.addLink(products);
 			response = new ResponseEntity<List<Product>>(products, status);
@@ -45,11 +44,10 @@ public class ProductController {
 	}
 
 	@GetMapping("/{id}")
-	public Product getProduct(@PathVariable long id) {
+	public ResponseEntity<Product> getProduct(@PathVariable long id) {
 		Product product = productRepository.getById(id);
 
 		HttpStatus status = HttpStatus.NOT_FOUND;
-		// PODE DAR ERRO, TIPO "PRODUCT", MAS E SE NÃO TIVER CLIENTE???
 		ResponseEntity<Product> response = new ResponseEntity<>(status);
 		if (product != null) {
 			status = HttpStatus.FOUND;
@@ -60,7 +58,7 @@ public class ProductController {
 	}
 
 	@PostMapping("/create")
-	public void createProduct(@RequestBody Product product) {
+	public ResponseEntity<HttpStatus> createProduct(@RequestBody Product product) {
 		HttpStatus status = HttpStatus.CONFLICT;
 		if(product.getId() == null){
 			productRepository.save(product);
@@ -70,20 +68,20 @@ public class ProductController {
 	}
 
 	@PutMapping("/update")
-	public void updateProduct(@RequestBody Product updatedProduct) {
+	public ResponseEntity<HttpStatus> updateProduct(@RequestBody Product updatedProduct) {
 		Product product = productRepository.getById(updatedProduct.getId());
 
 		HttpStatus status = HttpStatus.BAD_REQUEST;
 		if(product != null){
 			status = HttpStatus.OK;
-			productUpdater.update(product, updatedproduct);
+			productUpdater.update(product, updatedProduct);
 			productRepository.save(product);
 		}
 		return new ResponseEntity<>(status);
 	}
 
 	@DeleteMapping("/delete")
-	public void deleteProduct(@RequestBody Product deletedProduct) {
+	public ResponseEntity<HttpStatus> deleteProduct(@RequestBody Product deletedProduct) {
 		Product product = productRepository.getById(deletedProduct.getId());
 	
 		HttpStatus status = HttpStatus.BAD_REQUEST;

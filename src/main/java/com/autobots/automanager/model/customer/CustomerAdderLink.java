@@ -1,4 +1,4 @@
-package com.autobots.automanager.modelos;
+package com.autobots.automanager.model.customer;
 
 import java.util.List;
 
@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import com.autobots.automanager.controller.CustomerController;
 import com.autobots.automanager.entity.Customer;
+import com.autobots.automanager.model.AdderLink;
 
 @Component
 public class CustomerAdderLink implements AdderLink<Customer> {

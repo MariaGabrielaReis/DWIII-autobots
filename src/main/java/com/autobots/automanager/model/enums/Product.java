@@ -1,7 +1,7 @@
 package com.autobots.automanager.model.enums;
 
 public enum Product {
-  oil: "Óleo",
+ /* oil("Óleo"),
   airFilter: "Filtro de ar",
   oilFilter: "Filtro de óleo",
   fuelFilter: "Filtro de combustível",
@@ -12,5 +12,5 @@ public enum Product {
   hubcap: "Calota",
   gearShiftCover: "Bola de câmbio",
   steeringWheelCover: "Capa de volante",
-  seatCover: "Capa de banco",
+  seatCover: "Capa de banco";*/
 }

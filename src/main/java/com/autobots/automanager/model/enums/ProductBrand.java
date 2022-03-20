@@ -2,7 +2,7 @@ package com.autobots.automanager.model.enums;
 
 public enum ProductBrand {
   // oil brands
-  lubrax: "Lubrax",
+	/*  lubrax: "Lubrax",
   castrol : "Castrol",
   shell: "Shell",
   petronas: "Petronas",
@@ -28,5 +28,5 @@ public enum ProductBrand {
   acdelco: "ACDELCO",
   wega: "WEGA",
 
-  other: "Outros",
+  other: "Outros", */
 }

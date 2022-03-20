@@ -20,7 +20,7 @@ import com.autobots.automanager.model.customer.CustomerUpdater;
 import com.autobots.automanager.repository.CustomerRepository;
 
 @RestController
-@RequestMapping("/customers")
+//@RequestMapping("/customers")
 public class CustomerController {
 	@Autowired
 	private CustomerRepository customerRepository;
@@ -29,27 +29,29 @@ public class CustomerController {
 	@Autowired
 	private CustomerUpdater customerUpdater;
 
-	@GetMapping("/")
-	public List<Customer> getCustomers() {
+	@GetMapping("/customers/a")
+	public ResponseEntity<List<Customer>> getCustomers() {
 		List<Customer> customers = customerRepository.findAll();
 
 		HttpStatus status = HttpStatus.NOT_FOUND;
-		// PODE DAR ERRO, TIPO DE LISTA, MAS E SE NÃO TIVER LISTA???
 		ResponseEntity<List<Customer>> response = new ResponseEntity<>(status);
-		if (customers.isNotEmpty()) {
-			status = HttpStatus.FOUND;
-			customerAdderLink.addLink(customers);
-			response = new ResponseEntity<List<Customer>>(customers, status);
-		}	
+		if (customers.isEmpty()) {
+				status = HttpStatus.FOUND;
+		}
+		
+		//if (!customers.isEmpty()) {
+		//	status = HttpStatus.FOUND;
+		//	customerAdderLink.addLink(customers);
+		//	response = new ResponseEntity<List<Customer>>(customers, status);
+		//}	
 		return response;
 	}
 
 	@GetMapping("/{id}")
-	public Customer getCustomer(@PathVariable long id) {
+	public ResponseEntity<Customer> getCustomer(@PathVariable long id) {
 		Customer customer = customerRepository.getById(id);
 
 		HttpStatus status = HttpStatus.NOT_FOUND;
-		// PODE DAR ERRO, TIPO "CLIENTE", MAS E SE NÃO TIVER CLIENTE???
 		ResponseEntity<Customer> response = new ResponseEntity<>(status);
 		if (customer != null) {
 			status = HttpStatus.FOUND;
@@ -60,7 +62,7 @@ public class CustomerController {
 	}
 
 	@PostMapping("/create")
-	public void createCustomer(@RequestBody Customer customer) {
+	public ResponseEntity<HttpStatus> createCustomer(@RequestBody Customer customer) {
 		HttpStatus status = HttpStatus.CONFLICT;
 		if(customer.getId() == null){
 			customerRepository.save(customer);
@@ -70,7 +72,7 @@ public class CustomerController {
 	}
 
 	@PutMapping("/update")
-	public void updateCustomer(@RequestBody Customer updatedCustomer) {
+	public ResponseEntity<HttpStatus> updateCustomer(@RequestBody Customer updatedCustomer) {
 		Customer customer = customerRepository.getById(updatedCustomer.getId());
 
 		HttpStatus status = HttpStatus.BAD_REQUEST;
@@ -83,7 +85,7 @@ public class CustomerController {
 	}
 
 	@DeleteMapping("/delete")
-	public void deleteCustomer(@RequestBody Customer deletedCustomer) {
+	public ResponseEntity<HttpStatus> deleteCustomer(@RequestBody Customer deletedCustomer) {
 		Customer customer = customerRepository.getById(deletedCustomer.getId());
 
 		HttpStatus status = HttpStatus.BAD_REQUEST;

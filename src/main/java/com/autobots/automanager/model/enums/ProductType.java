@@ -1,8 +1,8 @@
 package com.autobots.automanager.model.enums;
 
 public enum ProductType {
-  oil: "Óleo",
+ /*  oil: "Óleo",
   filter: "Filtro",
   lamp: "Lâmpada",
-  other: "Outros",
+  other: "Outros", */
 }

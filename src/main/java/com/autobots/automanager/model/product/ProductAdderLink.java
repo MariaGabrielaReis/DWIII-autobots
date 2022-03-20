@@ -1,5 +1,7 @@
 package com.autobots.automanager.modelos;
 
+package com.autobots.automanager.model.product;
+
 import java.util.List;
 
 import org.springframework.hateoas.Link;
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import com.autobots.automanager.controller.ProductController;
 import com.autobots.automanager.entity.Product;
+import com.autobots.automanager.model.AdderLink;
 
 @Component
 public class ProductAdderLink implements AdderLink<Product> {

@@ -1,7 +1,7 @@
 package com.autobots.automanager.model.enums;
 
 public enum Regime {
-  road: "Rodoviário",
+	/* road: "Rodoviário",
   rural: "Rural",
-  mixed: "Misto",
+  mixed: "Misto", */
 }

@@ -1,6 +1,7 @@
 package com.autobots.automanager.model.vehicle;
 
 import com.autobots.automanager.entity.Vehicle;
+import com.autobots.automanager.model.NullStringVerifier;
 
 public class VehicleUpdater {
 	private NullStringVerifier verifier = new NullStringVerifier();
@@ -9,8 +10,8 @@ public class VehicleUpdater {
 		if (updatedVechicle.getOwner() != null) {
 			vechicle.setOwner(updatedVechicle.getOwner());
 		}
-		if (!verifier.verify(updatedVechicle.getLicencePlate())) {
-			vechicle.setLicencePlate(updatedVechicle.getLicencePlate());
+		if (!verifier.verify(updatedVechicle.getLicensePlate())) {
+			vechicle.setLicensePlate(updatedVechicle.getLicensePlate());
 		}
 		if (updatedVechicle.getBrand() != null) {
 			vechicle.setBrand(updatedVechicle.getBrand());

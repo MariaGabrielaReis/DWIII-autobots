@@ -30,13 +30,12 @@ public class VehicleController {
 	private VehicleUpdater vehicleUpdater;
 
 	@GetMapping("/")
-	public List<Vehicle> getVehicles() {
+	public ResponseEntity<List<Vehicle>> getVehicles() {
 		List<Vehicle> vehicles = vehicleRepository.findAll();
 		
 		HttpStatus status = HttpStatus.NOT_FOUND;
-		// PODE DAR ERRO, TIPO DE LISTA, MAS E SE NÃO TIVER LISTA???
 		ResponseEntity<List<Vehicle>> response = new ResponseEntity<>(status);
-		if (vehicles.isNotEmpty()) {
+		if (!vehicles.isEmpty()) {
 			status = HttpStatus.FOUND;
 			vehicleAdderLink.addLink(vehicles);
 			response = new ResponseEntity<List<Vehicle>>(vehicles, status);
@@ -45,11 +44,10 @@ public class VehicleController {
 	}
 
 	@GetMapping("/{id}")
-	public Vehicle getVehicle(@PathVariable long id) {
+	public ResponseEntity<Vehicle> getVehicle(@PathVariable long id) {
 		Vehicle vehicle = vehicleRepository.getById(id);
 		
 		HttpStatus status = HttpStatus.NOT_FOUND;
-		// PODE DAR ERRO, TIPO "vehicle", MAS E SE NÃO TIVER CLIENTE???
 		ResponseEntity<Vehicle> response = new ResponseEntity<>(status);
 		if (vehicle != null) {
 			status = HttpStatus.FOUND;
@@ -60,7 +58,7 @@ public class VehicleController {
 	}
 
 	@PostMapping("/create")
-	public void createVehicle(@RequestBody Vehicle vehicle) {
+	public ResponseEntity<HttpStatus> createVehicle(@RequestBody Vehicle vehicle) {
 		HttpStatus status = HttpStatus.CONFLICT;
 		if(vehicle.getId() == null){
 			vehicleRepository.save(vehicle);
@@ -70,7 +68,7 @@ public class VehicleController {
 	}
 
 	@PutMapping("/update")
-	public void updateVehicle(@RequestBody Vehicle updatedVehicle) {
+	public ResponseEntity<HttpStatus> updateVehicle(@RequestBody Vehicle updatedVehicle) {
 		Vehicle vehicle = vehicleRepository.getById(updatedVehicle.getId());
 
 		HttpStatus status = HttpStatus.BAD_REQUEST;
@@ -83,7 +81,7 @@ public class VehicleController {
 	}
 
 	@DeleteMapping("/delete")
-	public void deleteVehicle(@RequestBody Vehicle deletedVehicle) {
+	public ResponseEntity<HttpStatus> deleteVehicle(@RequestBody Vehicle deletedVehicle) {
 		Vehicle vehicle = vehicleRepository.getById(deletedVehicle.getId());
 
 		HttpStatus status = HttpStatus.BAD_REQUEST;

@@ -1,11 +1,10 @@
 package com.autobots.automanager.model.customer;
 
 import com.autobots.automanager.entity.Customer;
+import com.autobots.automanager.model.NullStringVerifier;
 
 public class CustomerUpdater {
 	private NullStringVerifier verifier = new NullStringVerifier();
-	private AddressUpdater addressUpdater = new AddressUpdater();
-	private PhoneUpdater phoneUpdater = new PhoneUpdater();
 
 	public void update(Customer customer, Customer updatedCustomer) {
 		if (!verifier.verify(updatedCustomer.getName())) {
@@ -32,22 +31,22 @@ public class CustomerUpdater {
 
 		// Address
 		if (!verifier.verify(updatedCustomer.getState())) {
-			address.setState(updatedCustomer.getState());
+			customer.setState(updatedCustomer.getState());
 		}
 		if (!verifier.verify(updatedCustomer.getCity())) {
-			address.setCity(updatedCustomer.getCity());
+			customer.setCity(updatedCustomer.getCity());
 		}
 		if (!verifier.verify(updatedCustomer.getDistrict())) {
-			address.setDistrict(updatedCustomer.getDistrict());
+			customer.setDistrict(updatedCustomer.getDistrict());
 		}
 		if (!verifier.verify(updatedCustomer.getStreet())) {
-			address.setStreet(updatedCustomer.getStreet());
+			customer.setStreet(updatedCustomer.getStreet());
 		}
-		if (!verifier.verify(updatedCustomer.getNumber())) {
-			address.setNumber(updatedCustomer.getNumber());
+		if (updatedCustomer.getNumber() != null) {
+			customer.setNumber(updatedCustomer.getNumber());
 		}
 		if (!verifier.verify(updatedCustomer.getComplement())) {
-			address.setComplement(updatedCustomer.getComplement());
+			customer.setComplement(updatedCustomer.getComplement());
 		}
 	}
 }
