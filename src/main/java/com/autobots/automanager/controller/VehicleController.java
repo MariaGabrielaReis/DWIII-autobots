@@ -77,7 +77,7 @@ public class VehicleController {
 	}
 
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<HttpStatus> deleteVehicle(@RequestBody Long id) {
+	public ResponseEntity<HttpStatus> deleteVehicle(@PathVariable Long id) {
 		Optional<Vehicle> vehicleOptional = vehicleRepository.findById(id);
 		if (vehicleOptional.isEmpty()) {
 			return new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);
