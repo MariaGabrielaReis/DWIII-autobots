@@ -1,6 +1,7 @@
 package com.autobots.automanager.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,7 +21,7 @@ import com.autobots.automanager.model.customer.CustomerUpdater;
 import com.autobots.automanager.repository.CustomerRepository;
 
 @RestController
-//@RequestMapping("/customers")
+@RequestMapping("/customers")
 public class CustomerController {
 	@Autowired
 	private CustomerRepository customerRepository;
@@ -29,70 +30,56 @@ public class CustomerController {
 	@Autowired
 	private CustomerUpdater customerUpdater;
 
-	@GetMapping("/customers/a")
+	@GetMapping("/")
 	public ResponseEntity<List<Customer>> getCustomers() {
 		List<Customer> customers = customerRepository.findAll();
-
-		HttpStatus status = HttpStatus.NOT_FOUND;
-		ResponseEntity<List<Customer>> response = new ResponseEntity<>(status);
 		if (customers.isEmpty()) {
-				status = HttpStatus.FOUND;
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		
-		//if (!customers.isEmpty()) {
-		//	status = HttpStatus.FOUND;
-		//	customerAdderLink.addLink(customers);
-		//	response = new ResponseEntity<List<Customer>>(customers, status);
-		//}	
-		return response;
+		customerAdderLink.addLink(customers);
+		return new ResponseEntity<List<Customer>>(customers, HttpStatus.FOUND);
 	}
 
 	@GetMapping("/{id}")
 	public ResponseEntity<Customer> getCustomer(@PathVariable long id) {
-		Customer customer = customerRepository.getById(id);
-
-		HttpStatus status = HttpStatus.NOT_FOUND;
-		ResponseEntity<Customer> response = new ResponseEntity<>(status);
-		if (customer != null) {
-			status = HttpStatus.FOUND;
-			customerAdderLink.addLink(customer);
-			response = new ResponseEntity<Customer>(customer, status);
-		}	
-		return response;
+		Optional<Customer> customerOptional = customerRepository.findById(id);
+		if (customerOptional.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		Customer customer = customerOptional.get();
+		customerAdderLink.addLink(customer);
+		return new ResponseEntity<Customer>(customer, HttpStatus.FOUND);
 	}
 
 	@PostMapping("/create")
 	public ResponseEntity<HttpStatus> createCustomer(@RequestBody Customer customer) {
-		HttpStatus status = HttpStatus.CONFLICT;
-		if(customer.getId() == null){
-			customerRepository.save(customer);
-			status = HttpStatus.CREATED;
+		if (customer.getId() != null) {
+			return new ResponseEntity<HttpStatus>(HttpStatus.CONFLICT);
 		}
-		return new ResponseEntity<>(status);
+		customerRepository.save(customer);
+		return new ResponseEntity<HttpStatus>(HttpStatus.CREATED);
 	}
 
 	@PutMapping("/update")
 	public ResponseEntity<HttpStatus> updateCustomer(@RequestBody Customer updatedCustomer) {
-		Customer customer = customerRepository.getById(updatedCustomer.getId());
-
-		HttpStatus status = HttpStatus.BAD_REQUEST;
-		if(customer != null){
-			status = HttpStatus.OK;
-			customerUpdater.update(customer, updatedCustomer);
-			customerRepository.save(customer);
+		Optional<Customer> customerOptional = customerRepository.findById(updatedCustomer.getId());
+		if (customerOptional == null) {
+			return new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);
 		}
-		return new ResponseEntity<>(status);
+		Customer customer = customerOptional.get();
+		customerUpdater.update(customer, updatedCustomer);
+		customerRepository.save(customer);
+		return new ResponseEntity<HttpStatus>(HttpStatus.OK);
 	}
 
-	@DeleteMapping("/delete")
-	public ResponseEntity<HttpStatus> deleteCustomer(@RequestBody Customer deletedCustomer) {
-		Customer customer = customerRepository.getById(deletedCustomer.getId());
-
-		HttpStatus status = HttpStatus.BAD_REQUEST;
-		if(customer != null){
-			status = HttpStatus.OK;
-			customerRepository.delete(customer);
+	@DeleteMapping("/delete/{id}")
+	public ResponseEntity<HttpStatus> deleteCustomer(@PathVariable Long id) {
+		Optional<Customer> customerOptional = customerRepository.findById(id);
+		if (customerOptional == null) {
+			return new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);
 		}
-		return new ResponseEntity<>(status);
+		Customer customer = customerOptional.get();
+		customerRepository.delete(customer);
+		return new ResponseEntity<HttpStatus>(HttpStatus.OK);
 	}
 }

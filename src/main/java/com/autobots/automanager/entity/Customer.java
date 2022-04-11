@@ -1,6 +1,6 @@
 package com.autobots.automanager.entity;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -33,10 +33,10 @@ public class Customer extends RepresentationModel<Customer> {
 	@Column(nullable = false)
 	private String email;
 	@Column(nullable = true)
-	private Date birthDate;
-	@Column(nullable = false)
-	private Date registrationDate;
-	
+	private LocalDateTime birthDate;
+	@Column(nullable = true)
+	private LocalDateTime registrationDate;
+
 	// Address
 	@Column(nullable = true)
 	private String state;

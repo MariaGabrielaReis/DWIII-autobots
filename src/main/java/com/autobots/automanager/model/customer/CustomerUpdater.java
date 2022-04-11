@@ -2,7 +2,9 @@ package com.autobots.automanager.model.customer;
 
 import com.autobots.automanager.entity.Customer;
 import com.autobots.automanager.model.NullStringVerifier;
+import org.springframework.stereotype.Component;
 
+@Component
 public class CustomerUpdater {
 	private NullStringVerifier verifier = new NullStringVerifier();
 
