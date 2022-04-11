@@ -2,31 +2,16 @@ package com.autobots.automanager.model.enums;
 
 public enum ProductBrand {
   // oil brands
-	/*  lubrax: "Lubrax",
-  castrol : "Castrol",
-  shell: "Shell",
-  petronas: "Petronas",
-  mobil: "Mobil",
-  ipiranga: "Ipiranga",
-  havoline: "Havoline",
-  elf: "ELF",
+  Lubrax, Castrol, Shell, Petronas, Mobil, Ipiranga, Havoline, ELF,
 
   // geral filters
-  fram: "FRAM",
-  tecfil: "TECFIL",
-  mahle: "MAHLE",
-  mann: "MANN",
-  metalLeve: "METAL LEVE",
-  bosch: "BOSCH",
-  kitcia: "KIT&CIA",
+  FRAM, TECFIL, MAHLE, MANN, METAL_LEVE, BOSCH, KIT_CIA,
 
   // air filters
-  knorr: "KNORR",
-  wabco: "WABCO",
+  KNORR, WABCO,
 
   // cabin filters
-  acdelco: "ACDELCO",
-  wega: "WEGA",
+  ACDELCO, WEGA,
 
-  other: "Outros", */
+  other
 }
