@@ -62,8 +62,12 @@ public class CustomerController {
 
 	@PutMapping("/update")
 	public ResponseEntity<HttpStatus> updateCustomer(@RequestBody Customer updatedCustomer) {
-		Optional<Customer> customerOptional = customerRepository.findById(updatedCustomer.getId());
-		if (customerOptional == null) {
+		Long id = updatedCustomer.getId();
+		if (id == null) {
+			return new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);
+		}
+		Optional<Customer> customerOptional = customerRepository.findById(id);
+		if (customerOptional.isEmpty()) {
 			return new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);
 		}
 		Customer customer = customerOptional.get();
@@ -75,7 +79,7 @@ public class CustomerController {
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<HttpStatus> deleteCustomer(@PathVariable Long id) {
 		Optional<Customer> customerOptional = customerRepository.findById(id);
-		if (customerOptional == null) {
+		if (customerOptional.isEmpty()) {
 			return new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);
 		}
 		Customer customer = customerOptional.get();
