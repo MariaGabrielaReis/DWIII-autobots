@@ -1,5 +1,3 @@
-package com.autobots.automanager.modelos;
-
 package com.autobots.automanager.model.product;
 
 import java.util.List;

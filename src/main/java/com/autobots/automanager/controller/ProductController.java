@@ -1,6 +1,7 @@
 package com.autobots.automanager.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,65 +31,59 @@ public class ProductController {
 	private ProductUpdater productUpdater;
 
 	@GetMapping("/")
-	public  ResponseEntity<List<Product>> getProducts() {
+	public ResponseEntity<List<Product>> getProducts() {
 		List<Product> products = productRepository.findAll();
-		
-		HttpStatus status = HttpStatus.NOT_FOUND;
-		ResponseEntity<List<Product>> response = new ResponseEntity<>(status);
-		if (!products.isEmpty()) {
-			status = HttpStatus.FOUND;
-			productAdderLink.addLink(products);
-			response = new ResponseEntity<List<Product>>(products, status);
+		if (products.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		return response;
+		productAdderLink.addLink(products);
+		return new ResponseEntity<List<Product>>(products, HttpStatus.FOUND);
 	}
 
 	@GetMapping("/{id}")
 	public ResponseEntity<Product> getProduct(@PathVariable long id) {
-		Product product = productRepository.getById(id);
-
-		HttpStatus status = HttpStatus.NOT_FOUND;
-		ResponseEntity<Product> response = new ResponseEntity<>(status);
-		if (product != null) {
-			status = HttpStatus.FOUND;
-			productAdderLink.addLink(product);
-			response = new ResponseEntity<Product>(product, status);
-		}	
-		return response;
+		Optional<Product> productOptional = productRepository.findById(id);
+		if (productOptional.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		Product product = productOptional.get();
+		productAdderLink.addLink(product);
+		return new ResponseEntity<Product>(product, HttpStatus.FOUND);
 	}
 
 	@PostMapping("/create")
 	public ResponseEntity<HttpStatus> createProduct(@RequestBody Product product) {
-		HttpStatus status = HttpStatus.CONFLICT;
-		if(product.getId() == null){
-			productRepository.save(product);
-			status = HttpStatus.CREATED;
+		if (product.getId() != null) {
+			return new ResponseEntity<HttpStatus>(HttpStatus.CONFLICT);
 		}
-		return new ResponseEntity<>(status);
+		productRepository.save(product);
+		return new ResponseEntity<HttpStatus>(HttpStatus.CREATED);
 	}
 
 	@PutMapping("/update")
 	public ResponseEntity<HttpStatus> updateProduct(@RequestBody Product updatedProduct) {
-		Product product = productRepository.getById(updatedProduct.getId());
-
-		HttpStatus status = HttpStatus.BAD_REQUEST;
-		if(product != null){
-			status = HttpStatus.OK;
-			productUpdater.update(product, updatedProduct);
-			productRepository.save(product);
+		Long id = updatedProduct.getId();
+		if (id == null) {
+			return new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);
 		}
-		return new ResponseEntity<>(status);
+		Optional<Product> productOptional = productRepository.findById(id);
+		if (productOptional.isEmpty()) {
+			return new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);
+		}
+		Product product = productOptional.get();
+		productUpdater.update(product, updatedProduct);
+		productRepository.save(product);
+		return new ResponseEntity<HttpStatus>(HttpStatus.OK);
 	}
 
-	@DeleteMapping("/delete")
-	public ResponseEntity<HttpStatus> deleteProduct(@RequestBody Product deletedProduct) {
-		Product product = productRepository.getById(deletedProduct.getId());
-	
-		HttpStatus status = HttpStatus.BAD_REQUEST;
-		if(product != null){
-			status = HttpStatus.OK;
-			productRepository.delete(product);
+	@DeleteMapping("/delete/{id}")
+	public ResponseEntity<HttpStatus> deleteProduct(@PathVariable Long id) {
+		Optional<Product> productOptional = productRepository.findById(id);
+		if (productOptional.isEmpty()) {
+			return new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);
 		}
-		return new ResponseEntity<>(status);
+		Product product = productOptional.get();
+		productRepository.delete(product);
+		return new ResponseEntity<HttpStatus>(HttpStatus.OK);
 	}
 }
