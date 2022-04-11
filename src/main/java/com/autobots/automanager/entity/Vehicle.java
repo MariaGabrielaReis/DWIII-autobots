@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import org.springframework.hateoas.RepresentationModel;
 
@@ -21,11 +21,11 @@ public class Vehicle extends RepresentationModel<Vehicle> {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@OneToMany()
+	@OneToOne
 	private Customer owner;
 	@Column(unique = true, nullable = false)
 	private String licensePlate;
-	@OneToMany()
+	@OneToOne
 	private VehicleBrand brand;
 	@Column(nullable = false)
 	private String model;

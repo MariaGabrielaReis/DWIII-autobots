@@ -1,6 +1,7 @@
 package com.autobots.automanager.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,7 +21,7 @@ import com.autobots.automanager.model.vehicle.VehicleUpdater;
 import com.autobots.automanager.repository.VehicleRepository;
 
 @RestController
-@RequestMapping("/vehicle")
+@RequestMapping("/vehicles")
 public class VehicleController {
 	@Autowired
 	private VehicleRepository vehicleRepository;
@@ -32,63 +33,57 @@ public class VehicleController {
 	@GetMapping("/")
 	public ResponseEntity<List<Vehicle>> getVehicles() {
 		List<Vehicle> vehicles = vehicleRepository.findAll();
-		
-		HttpStatus status = HttpStatus.NOT_FOUND;
-		ResponseEntity<List<Vehicle>> response = new ResponseEntity<>(status);
-		if (!vehicles.isEmpty()) {
-			status = HttpStatus.FOUND;
-			vehicleAdderLink.addLink(vehicles);
-			response = new ResponseEntity<List<Vehicle>>(vehicles, status);
-		}	
-		return response;
+		if (vehicles.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		vehicleAdderLink.addLink(vehicles);
+		return new ResponseEntity<List<Vehicle>>(vehicles, HttpStatus.FOUND);
 	}
 
 	@GetMapping("/{id}")
 	public ResponseEntity<Vehicle> getVehicle(@PathVariable long id) {
-		Vehicle vehicle = vehicleRepository.getById(id);
-		
-		HttpStatus status = HttpStatus.NOT_FOUND;
-		ResponseEntity<Vehicle> response = new ResponseEntity<>(status);
-		if (vehicle != null) {
-			status = HttpStatus.FOUND;
-			vehicleAdderLink.addLink(vehicle);
-			response = new ResponseEntity<Vehicle>(vehicle, status);
-		}	
-		return response;
+		Optional<Vehicle> vehicleOptional = vehicleRepository.findById(id);
+		if (vehicleOptional.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		Vehicle vehicle = vehicleOptional.get();
+		vehicleAdderLink.addLink(vehicle);
+		return new ResponseEntity<Vehicle>(vehicle, HttpStatus.FOUND);
 	}
 
 	@PostMapping("/create")
 	public ResponseEntity<HttpStatus> createVehicle(@RequestBody Vehicle vehicle) {
-		HttpStatus status = HttpStatus.CONFLICT;
-		if(vehicle.getId() == null){
-			vehicleRepository.save(vehicle);
-			status = HttpStatus.CREATED;
+		if (vehicle.getId() != null) {
+			return new ResponseEntity<HttpStatus>(HttpStatus.CONFLICT);
 		}
-		return new ResponseEntity<>(status);
+		vehicleRepository.save(vehicle);
+		return new ResponseEntity<HttpStatus>(HttpStatus.CREATED);
 	}
 
 	@PutMapping("/update")
 	public ResponseEntity<HttpStatus> updateVehicle(@RequestBody Vehicle updatedVehicle) {
-		Vehicle vehicle = vehicleRepository.getById(updatedVehicle.getId());
-
-		HttpStatus status = HttpStatus.BAD_REQUEST;
-		if(vehicle != null){
-			status = HttpStatus.OK;
-			vehicleUpdater.update(vehicle, updatedVehicle);
-			vehicleRepository.save(vehicle);
+		Long id = updatedVehicle.getId();
+		if (id == null) {
+			return new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);
 		}
-		return new ResponseEntity<>(status);
+		Optional<Vehicle> vehicleOptional = vehicleRepository.findById(id);
+		if (vehicleOptional.isEmpty()) {
+			return new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);
+		}
+		Vehicle vehicle = vehicleOptional.get();
+		vehicleUpdater.update(vehicle, updatedVehicle);
+		vehicleRepository.save(vehicle);
+		return new ResponseEntity<HttpStatus>(HttpStatus.OK);
 	}
 
-	@DeleteMapping("/delete")
-	public ResponseEntity<HttpStatus> deleteVehicle(@RequestBody Vehicle deletedVehicle) {
-		Vehicle vehicle = vehicleRepository.getById(deletedVehicle.getId());
-
-		HttpStatus status = HttpStatus.BAD_REQUEST;
-		if(vehicle != null){
-			status = HttpStatus.OK;
-			vehicleRepository.delete(vehicle);
+	@DeleteMapping("/delete/{id}")
+	public ResponseEntity<HttpStatus> deleteVehicle(@RequestBody Long id) {
+		Optional<Vehicle> vehicleOptional = vehicleRepository.findById(id);
+		if (vehicleOptional.isEmpty()) {
+			return new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);
 		}
-		return new ResponseEntity<>(status);
+		Vehicle vehicle = vehicleOptional.get();
+		vehicleRepository.delete(vehicle);
+		return new ResponseEntity<HttpStatus>(HttpStatus.OK);
 	}
 }
