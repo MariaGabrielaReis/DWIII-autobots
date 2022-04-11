@@ -1,9 +1,5 @@
 package com.autobots.automanager.entity;
 
-package com.autobots.automanager.entity;
-
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,22 +16,22 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-public class VehicleBrand  extends RepresentationModel<VehicleBrand>{
+public class VehicleBrand extends RepresentationModel<VehicleBrand> {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@Column(nullable = false)
 	private String name;
 	@Column(nullable = false)
-	private List<ProductBrand> approvedOilBrands;
+	private ProductBrand approvedOilBrands;
 
 	// Brands of filter approved
 	@Column(nullable = false)
-	private List<ProductBrand> approvedAirFilterBrands;
+	private ProductBrand approvedAirFilterBrands;
 	@Column(nullable = false)
-	private List<ProductBrand> approvedOilFilterBrands;
+	private ProductBrand approvedOilFilterBrands;
 	@Column(nullable = false)
-	private List<ProductBrand> approvedFuelFilterBrands;
+	private ProductBrand approvedFuelFilterBrands;
 	@Column(nullable = false)
-	private List<ProductBrand> approvedCabinFilterBrands;
+	private ProductBrand approvedCabinFilterBrands;
 }

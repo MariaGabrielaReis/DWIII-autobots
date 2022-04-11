@@ -1,6 +1,7 @@
 package com.autobots.automanager.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,7 +21,7 @@ import com.autobots.automanager.model.vehicle.VehicleBrandUpdater;
 import com.autobots.automanager.repository.VehicleBrandRepository;
 
 @RestController
-@RequestMapping("/vehicle/brands")
+@RequestMapping("/vehicles/brands")
 public class VehicleBrandController {
 	@Autowired
 	private VehicleBrandRepository vehicleBrandRepository;
@@ -32,63 +33,57 @@ public class VehicleBrandController {
 	@GetMapping("/")
 	public ResponseEntity<List<VehicleBrand>> getVehicleBrands() {
 		List<VehicleBrand> vehicleBrands = vehicleBrandRepository.findAll();
-		
-		HttpStatus status = HttpStatus.NOT_FOUND;
-		ResponseEntity<List<VehicleBrand>> response = new ResponseEntity<>(status);
-		if (!vehicleBrands.isEmpty()) {
-			status = HttpStatus.FOUND;
-			vehicleBrandAdderLink.addLink(vehicleBrands);
-			response = new ResponseEntity<List<VehicleBrand>>(vehicleBrands, status);
-		}	
-		return response;
+		if (vehicleBrands.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		vehicleBrandAdderLink.addLink(vehicleBrands);
+		return new ResponseEntity<List<VehicleBrand>>(vehicleBrands, HttpStatus.FOUND);
 	}
 
 	@GetMapping("/{id}")
 	public ResponseEntity<VehicleBrand> getVehicleBrand(@PathVariable long id) {
-		VehicleBrand vehicleBrand = vehicleBrandRepository.getById(id);
-		
-		HttpStatus status = HttpStatus.NOT_FOUND;
-		ResponseEntity<VehicleBrand> response = new ResponseEntity<>(status);
-		if (vehicleBrand != null) {
-			status = HttpStatus.FOUND;
-			vehicleBrandAdderLink.addLink(vehicleBrand);
-			response = new ResponseEntity<VehicleBrand>(vehicleBrand, status);
-		}	
-		return response;
+		Optional<VehicleBrand> vehicleBrandOptional = vehicleBrandRepository.findById(id);
+		if (vehicleBrandOptional.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		VehicleBrand vehicleBrand = vehicleBrandOptional.get();
+		vehicleBrandAdderLink.addLink(vehicleBrand);
+		return new ResponseEntity<VehicleBrand>(vehicleBrand, HttpStatus.FOUND);
 	}
 
 	@PostMapping("/create")
 	public ResponseEntity<HttpStatus> createVehicleBrand(@RequestBody VehicleBrand vehicleBrand) {
-		HttpStatus status = HttpStatus.CONFLICT;
-		if(vehicleBrand.getId() == null){
-			vehicleBrandRepository.save(vehicleBrand);
-			status = HttpStatus.CREATED;
+		if (vehicleBrand.getId() != null) {
+			return new ResponseEntity<HttpStatus>(HttpStatus.CONFLICT);
 		}
-		return new ResponseEntity<>(status);
+		vehicleBrandRepository.save(vehicleBrand);
+		return new ResponseEntity<HttpStatus>(HttpStatus.CREATED);
 	}
 
 	@PutMapping("/update")
 	public ResponseEntity<HttpStatus> updateVehicleBrand(@RequestBody VehicleBrand updatedVehicleBrand) {
-		VehicleBrand vehicleBrand = vehicleBrandRepository.getById(updatedVehicleBrand.getId());
-		
-		HttpStatus status = HttpStatus.BAD_REQUEST;
-		if(vehicleBrand != null){
-			status = HttpStatus.OK;
-			vehicleBrandUpdater.update(vehicleBrand, updatedVehicleBrand);
-			vehicleBrandRepository.save(vehicleBrand);
+		Long id = updatedVehicleBrand.getId();
+		if (id == null) {
+			return new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);
 		}
-		return new ResponseEntity<>(status);
+		Optional<VehicleBrand> vehicleBrandOptional = vehicleBrandRepository.findById(id);
+		if (vehicleBrandOptional.isEmpty()) {
+			return new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);
+		}
+		VehicleBrand vehicleBrand = vehicleBrandOptional.get();
+		vehicleBrandUpdater.update(vehicleBrand, updatedVehicleBrand);
+		vehicleBrandRepository.save(vehicleBrand);
+		return new ResponseEntity<HttpStatus>(HttpStatus.OK);
 	}
 
-	@DeleteMapping("/delete")
-	public ResponseEntity<HttpStatus> deleteVehicleBrand(@RequestBody VehicleBrand deletedVehicleBrand) {
-		VehicleBrand vehicleBrand = vehicleBrandRepository.getById(deletedVehicleBrand.getId());
-
-		HttpStatus status = HttpStatus.BAD_REQUEST;
-		if(vehicleBrand != null){
-			status = HttpStatus.OK;
-			vehicleBrandRepository.delete(vehicleBrand);
+	@DeleteMapping("/delete/{id}")
+	public ResponseEntity<HttpStatus> deleteVehicleBrand(@PathVariable Long id) {
+		Optional<VehicleBrand> vehicleBrandOptional = vehicleBrandRepository.findById(id);
+		if (vehicleBrandOptional.isEmpty()) {
+			return new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);
 		}
-		return new ResponseEntity<>(status);
+		VehicleBrand vehicleBrand = vehicleBrandOptional.get();
+		vehicleBrandRepository.delete(vehicleBrand);
+		return new ResponseEntity<HttpStatus>(HttpStatus.OK);
 	}
 }
