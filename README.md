@@ -47,7 +47,12 @@ O servidor inciará localmente na porta 8080. Utilize o Insomnia ou o Postman pa
 <span id="demo">
   
 # :desktop_computer: Demonstração
-  
-> Em breve!
+Como o propósito desta primeira atividade era a criação do CRUD completo para as entidades mapeadas, eis um exemplo de CRUD criado, este para a entidade de cliente, imaginando que o mesmo foi feito para outras entidades como veículos, produtos e etc.
+
+<div align="center">
+
+![](https://user-images.githubusercontent.com/69374340/174420023-4570ea49-5ecd-4239-9ec0-6d47aa4e3169.png)
+</div>
+
 
 [![image](https://img.shields.io/badge/✨%20Maria%20Gabriela%20Reis,%202022-LinkedIn-009973?style=flat-square)](https://www.linkedin.com/in/mariagabrielareis/)
