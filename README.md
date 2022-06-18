@@ -51,7 +51,16 @@ O servidor inciará localmente na porta 8080. Utilize o Insomnia ou o Postman pa
 <span id="demo">
   
 # :desktop_computer: Demonstração
+Na tabela abaixo é possível observar uma demonstração do uso dos endpoints criados e as aplicações dos níveis de maturidade de APIs RESTful, como URIs únicas por recurso, uso correto dos status code e HATEOAS.
+> **Observação:** O controller escolhido para os testes foi o de clientes, porém as mesmas técnicas foram aplicadas para os outros endpoints como de veículos, produtos, marcas e etc.
   
-> Em breve!
+| Situação                   |  Resultado                 |
+| :------------------------- | :------------------------- | 
+| Obtenção de todos os clientes, porém sem clientes cadastrados | ![](https://user-images.githubusercontent.com/69374340/174419479-6eff4c96-2c80-4836-81c2-cfc97b5c49c5.png)|
+| Cadastro de um cliente | ![](https://user-images.githubusercontent.com/69374340/174419505-2f6e17ed-6cbd-4916-9241-5fe25bde1876.png) |
+| Obtenção de todos os clientes, agora com um cliente cadastrado | ![](https://user-images.githubusercontent.com/69374340/174419518-a7ef2ff6-f6c4-4384-9eb9-18fcd76407b0.png) |
+| Atualização de nome do cliente | ![](https://user-images.githubusercontent.com/69374340/174419563-c6019a12-4bec-4a97-afe9-3909f7ae4bb0.png) |
+| Atualização de cliente com id inexistente | ![](https://user-images.githubusercontent.com/69374340/174419586-7b2ecf8f-b35f-4e90-8f9d-59e5b54a8f3e.png) |
+| Exclusão de um cliente | ![](https://user-images.githubusercontent.com/69374340/174419618-837ce14d-ef83-46ad-9f42-d3c5892da153.png) |
 
 [![image](https://img.shields.io/badge/✨%20Maria%20Gabriela%20Reis,%202022-LinkedIn-009973?style=flat-square)](https://www.linkedin.com/in/mariagabrielareis/)
