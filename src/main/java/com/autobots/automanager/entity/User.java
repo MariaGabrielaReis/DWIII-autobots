@@ -45,10 +45,6 @@ public class User extends RepresentationModel<User> {
 	@Column(nullable = true)
 	private LocalDateTime registrationDate;
 
-	@OneToMany
-	@Column(nullable = true)
-	private List<Sale> sales;
-
 	// Address
 	@Column(nullable = true)
 	private String state;

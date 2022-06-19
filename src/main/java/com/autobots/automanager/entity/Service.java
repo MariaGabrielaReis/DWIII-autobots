@@ -29,5 +29,5 @@ public class Service extends RepresentationModel<Service> {
 	@Enumerated(EnumType.ORDINAL)
 	private ServiceType type;
 	@Column(nullable = true)
-	private Float price;
+	private Double price;
 }

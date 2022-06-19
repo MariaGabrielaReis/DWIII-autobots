@@ -35,7 +35,7 @@ public class Product extends RepresentationModel<Product> {
 	@Enumerated(EnumType.ORDINAL)
 	private ProductBrand brand;
 	@Column(nullable = true)
-	private Float price;
+	private Double price;
 	@Column(nullable = false)
 	private Short quantity;
 }

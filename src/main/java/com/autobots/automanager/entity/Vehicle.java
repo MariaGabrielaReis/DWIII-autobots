@@ -23,7 +23,7 @@ public class Vehicle extends RepresentationModel<Vehicle> {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@OneToOne
+	@OneToOne(optional = false)
 	private User owner;
 	@Column(unique = true, nullable = false)
 	private String licensePlate;
