@@ -93,11 +93,11 @@ public class UserController {
 			return new ResponseEntity<HttpStatus>(HttpStatus.CONFLICT);
 		}
 
-		BCryptPasswordEncoder codificador = new BCryptPasswordEncoder();
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		try {
 			Credential credential = new Credential();
 			credential.setLogin(user.getCredential().getLogin());
-			String password = codificador.encode(user.getCredential().getPassword());
+			String password = encoder.encode(user.getCredential().getPassword());
 			credential.setPassword(password);
 			user.setCredential(credential);
 			userRepository.save(user);
