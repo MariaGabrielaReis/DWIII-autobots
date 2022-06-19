@@ -45,8 +45,8 @@ O servidor inciará localmente na porta 8080. Utilize o Insomnia ou o Postman pa
  <br>
 <div align="center">
  
-| Situação                 |  Resultado                 |
-| :----------------------- | :------------------------- | 
+| Situação                 |  Resultado                                                                                                 |
+| :----------------------- | :--------------------------------------------------------------------------------------------------------- | 
 | Novo cliente             | ![](https://user-images.githubusercontent.com/69374340/174503668-75c77c8a-9a8d-4e0f-b177-290ad977d7e7.png) |
 | Novo funcionário         | ![](https://user-images.githubusercontent.com/69374340/174503706-4438e66e-a373-4778-af65-819ffaa2c372.png) |
 | Todos os usuários        | ![](https://user-images.githubusercontent.com/69374340/174503750-3d13dc7e-a274-4db2-9e93-a5a5ca2b81b6.png) |
@@ -63,13 +63,13 @@ O servidor inciará localmente na porta 8080. Utilize o Insomnia ou o Postman pa
  <br>
 <div align="center">
  
-| Situação              |  Resultado                 |
-| :-------------------- | :------------------------- | 
-| Nova marca            | ![]() |
-| Todas as marcas       | ![]() |
-| Marca específica      | ![]() |
-| Alterar nome de marca | ![]() |
-| Excluir marca         | ![]() |
+| Situação               |  Resultado                                                                                                 |
+| :--------------------- | :--------------------------------------------------------------------------------------------------------- | 
+| Nova marca             | ![](https://user-images.githubusercontent.com/69374340/174503941-2f0a0148-356f-4dd4-960c-3f97b29ddaec.png) |
+| Todas as marcas        | ![](https://user-images.githubusercontent.com/69374340/174503948-c269829e-182c-4472-9f04-4ef7b4d8afed.png) |
+| Marca específica       | ![](https://user-images.githubusercontent.com/69374340/174503965-20f0889e-6541-47c5-bc3a-f2dcf913a7ab.png) |
+| Alterar dados de marca | ![](https://user-images.githubusercontent.com/69374340/174504002-72f561b5-0b10-4e39-8935-3a32fae0e4c5.png) |
+| Excluir marca          | ![](https://user-images.githubusercontent.com/69374340/174504008-f6583425-daaa-4615-a5b5-8d79a3adfbbf.png) |
 </div>
 </details>
  
@@ -78,13 +78,13 @@ O servidor inciará localmente na porta 8080. Utilize o Insomnia ou o Postman pa
  <br>
 <div align="center">
  
-| Situação                         |  Resultado                 |
-| :------------------------------- | :------------------------- | 
-| Novo veículo                     | ![]() |
-| Todos os veículos                | ![]() |
-| Veículo específico               | ![]() |
-| Alterar quilometragem de veículo | ![]() |
-| Excluir veículo                  | ![]() |
+| Situação               |  Resultado                                                                                                 |
+| :--------------------- | :--------------------------------------------------------------------------------------------------------- | 
+| Novo veículo           | ![](https://user-images.githubusercontent.com/69374340/174504138-3faec7fa-34da-41ec-b0ac-3523c27e4807.png) |
+| Todos os veículos      | ![](https://user-images.githubusercontent.com/69374340/174504168-24d08007-b0ed-4208-833c-832793db0305.png) |
+| Veículo específico     | ![](https://user-images.githubusercontent.com/69374340/174504188-d617587e-5097-4def-a47c-c9d6768d2c7c.png) |
+| Alterar ano do veículo | ![](https://user-images.githubusercontent.com/69374340/174504228-58dbfb30-f17e-4b50-ac37-0e66c8360f24.png) |
+| Excluir veículo        | ![](https://user-images.githubusercontent.com/69374340/174504255-3c24cb91-e202-4edf-8357-2924343b1d97.png) |
 </div>
 </details>
  
@@ -93,14 +93,14 @@ O servidor inciará localmente na porta 8080. Utilize o Insomnia ou o Postman pa
  <br>
 <div align="center">
  
-| Situação                     |  Resultado                 |
-| :--------------------------- | :------------------------- | 
-| Novo produto                 | ![]() |
-| Todos os produtos            | ![]() |
-| Todos os produtos de um tipo | ![]() |
-| Produto específico           | ![]() |
-| Alterar nome de produto      | ![]() |
-| Excluir produto              | ![]() |
+| Situação                     |  Resultado                                                                                                 |
+| :--------------------------- | :--------------------------------------------------------------------------------------------------------- | 
+| Novo produto                 | ![](https://user-images.githubusercontent.com/69374340/174504287-94d9b630-85d0-4ffe-9584-31b1bcfb51ad.png) |
+| Todos os produtos            | ![](https://user-images.githubusercontent.com/69374340/174504299-2b123e71-cfd5-4103-9067-f76a4b802d03.png) |
+| Todos os produtos de um tipo | ![](https://user-images.githubusercontent.com/69374340/174504310-ec3b68f6-b557-4d4b-a7f5-07260e4e38f8.png) |
+| Produto específico           | ![](https://user-images.githubusercontent.com/69374340/174504318-d05bee91-776a-4e6c-88a2-c540901f075d.png) |
+| Alterar nome de produto      | ![](https://user-images.githubusercontent.com/69374340/174504343-5fb77284-80fb-45bc-926a-3d9c21d14b3f.png) |
+| Excluir produto              | ![](https://user-images.githubusercontent.com/69374340/174504351-316ff31b-8ab9-4404-b9f5-b39b13585e2b.png) |
 </div>
 </details>
  
