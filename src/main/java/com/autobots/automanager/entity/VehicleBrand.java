@@ -2,6 +2,8 @@ package com.autobots.automanager.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,16 +24,16 @@ public class VehicleBrand extends RepresentationModel<VehicleBrand> {
 	private Long id;
 	@Column(nullable = false)
 	private String name;
-	@Column(nullable = false)
+	@Enumerated(EnumType.ORDINAL)
 	private ProductBrand approvedOilBrands;
 
 	// Brands of filter approved
-	@Column(nullable = false)
+	@Enumerated(EnumType.ORDINAL)
 	private ProductBrand approvedAirFilterBrands;
-	@Column(nullable = false)
+	@Enumerated(EnumType.ORDINAL)
 	private ProductBrand approvedOilFilterBrands;
-	@Column(nullable = false)
+	@Enumerated(EnumType.ORDINAL)
 	private ProductBrand approvedFuelFilterBrands;
-	@Column(nullable = false)
+	@Enumerated(EnumType.ORDINAL)
 	private ProductBrand approvedCabinFilterBrands;
 }

@@ -2,6 +2,8 @@ package com.autobots.automanager.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,11 +26,13 @@ public class Product extends RepresentationModel<Product> {
 	private Long id;
 	@Column(nullable = false)
 	private String name;
-	@Column(nullable = false)
+	@Column(nullable = true)
+	private String description;
+	@Enumerated(EnumType.ORDINAL)
 	private ProductCategory category;
-	@Column(nullable = false)
+	@Enumerated(EnumType.ORDINAL)
 	private ProductType type;
-	@Column(nullable = false)
+	@Enumerated(EnumType.ORDINAL)
 	private ProductBrand brand;
 	@Column(nullable = true)
 	private Float price;

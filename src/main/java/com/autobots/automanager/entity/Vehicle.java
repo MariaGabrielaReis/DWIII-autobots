@@ -2,6 +2,8 @@ package com.autobots.automanager.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -35,7 +37,7 @@ public class Vehicle extends RepresentationModel<Vehicle> {
 	private String engineData;
 	@Column(nullable = false)
 	private Long currentMileage;
-	@Column(nullable = false)
+	@Enumerated(EnumType.ORDINAL)
 	private Regime regime;
 	@Column(nullable = false)
 	private String approvedOilViscosity;

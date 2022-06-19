@@ -1,12 +1,16 @@
 package com.autobots.automanager.entity;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import com.autobots.automanager.model.enums.UserRole;
 
@@ -22,7 +26,7 @@ public class User extends RepresentationModel<User> {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@Column(nullable = false)
+	@Enumerated(EnumType.ORDINAL)
 	private UserRole role;
 	@Column(nullable = false)
 	private String name;
@@ -40,6 +44,10 @@ public class User extends RepresentationModel<User> {
 	private LocalDateTime birthDate;
 	@Column(nullable = true)
 	private LocalDateTime registrationDate;
+
+	@OneToMany
+	@Column(nullable = true)
+	private List<Sale> sales;
 
 	// Address
 	@Column(nullable = true)

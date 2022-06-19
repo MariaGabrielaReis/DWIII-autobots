@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import com.autobots.automanager.controller.ProductController;
 import com.autobots.automanager.entity.Product;
 import com.autobots.automanager.model.AdderLink;
+import com.autobots.automanager.model.enums.ProductType;
 
 @Component
 public class ProductAdderLink implements AdderLink<Product> {
@@ -33,34 +34,18 @@ public class ProductAdderLink implements AdderLink<Product> {
 						.getProducts())
 				.withRel("products");
 
-		Link productTypeFilterListLink = WebMvcLinkBuilder
-				.linkTo(WebMvcLinkBuilder
-						.methodOn(ProductController.class)
-						.getProductsByType("filter"))
-				.withRel("filters");
+		ProductType[] productTypes = ProductType.values();
 
-		Link productTypeLampListLink = WebMvcLinkBuilder
-				.linkTo(WebMvcLinkBuilder
-						.methodOn(ProductController.class)
-						.getProductsByType("lamp"))
-				.withRel("lamps");
-
-		Link productTypeOilListLink = WebMvcLinkBuilder
-				.linkTo(WebMvcLinkBuilder
-						.methodOn(ProductController.class)
-						.getProductsByType("oil"))
-				.withRel("oils");
-
-		Link productTypeOtherListLink = WebMvcLinkBuilder
-				.linkTo(WebMvcLinkBuilder
-						.methodOn(ProductController.class)
-						.getProductsByType("other"))
-				.withRel("others");
+		for (ProductType type : productTypes) {
+			Link productTypeListLink = WebMvcLinkBuilder
+					.linkTo(WebMvcLinkBuilder
+							.methodOn(
+									ProductController.class)
+							.getProductsByType(type.toString()))
+					.withRel(type.toString());
+			product.add(productTypeListLink);
+		}
 
 		product.add(productsListLink);
-		product.add(productTypeFilterListLink);
-		product.add(productTypeLampListLink);
-		product.add(productTypeOilListLink);
-		product.add(productTypeOtherListLink);
 	}
 }
