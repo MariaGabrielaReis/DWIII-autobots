@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.autobots.automanager.entity.Product;
-import com.autobots.automanager.model.enums.ProductCategory;
 import com.autobots.automanager.model.enums.ProductType;
 import com.autobots.automanager.model.product.ProductAdderLink;
 import com.autobots.automanager.model.product.ProductUpdater;
