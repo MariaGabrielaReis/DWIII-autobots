@@ -1,14 +1,17 @@
-package com.autobots.automanager.model.customer;
+package com.autobots.automanager.model.user;
 
-import com.autobots.automanager.entity.Customer;
+import com.autobots.automanager.entity.User;
 import com.autobots.automanager.model.NullStringVerifier;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CustomerUpdater {
+public class UserUpdater {
 	private NullStringVerifier verifier = new NullStringVerifier();
 
-	public void update(Customer customer, Customer updatedCustomer) {
+	public void update(User customer, User updatedCustomer) {
+		if (updatedCustomer.getRole() != null) {
+			customer.setRole(updatedCustomer.getRole());
+		}
 		if (!verifier.verify(updatedCustomer.getName())) {
 			customer.setName(updatedCustomer.getName());
 		}
@@ -24,7 +27,7 @@ public class CustomerUpdater {
 		if (updatedCustomer.getPhone() != null) {
 			customer.setPhone(updatedCustomer.getPhone());
 		}
-		if (!verifier.verify(updatedCustomer.getEmail())) {
+		if (updatedCustomer.getEmail() != null) {
 			customer.setEmail(updatedCustomer.getEmail());
 		}
 		if (updatedCustomer.getBirthDate() != null) {
