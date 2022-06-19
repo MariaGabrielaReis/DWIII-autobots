@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.autobots.automanager.entity.Credential;
 import com.autobots.automanager.entity.User;
 import com.autobots.automanager.model.enums.UserRole;
 import com.autobots.automanager.model.user.UserAdderLink;
@@ -82,8 +84,19 @@ public class UserController {
 		if (user.getId() != null) {
 			return new ResponseEntity<HttpStatus>(HttpStatus.CONFLICT);
 		}
-		userRepository.save(user);
-		return new ResponseEntity<HttpStatus>(HttpStatus.CREATED);
+
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		try {
+			Credential credential = new Credential();
+			credential.setLogin(user.getCredential().getLogin());
+			String password = encoder.encode(user.getCredential().getPassword());
+			credential.setPassword(password);
+			user.setCredential(credential);
+			userRepository.save(user);
+			return new ResponseEntity<HttpStatus>(HttpStatus.CREATED);
+		} catch (Exception e) {
+			return new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);
+		}
 	}
 
 	@PutMapping("/update")

@@ -2,6 +2,7 @@ package com.autobots.automanager.entity;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -9,6 +10,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 import com.autobots.automanager.model.enums.UserRole;
 
@@ -42,6 +44,9 @@ public class User extends RepresentationModel<User> {
 	private LocalDateTime birthDate;
 	@Column(nullable = true)
 	private LocalDateTime registrationDate;
+
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+	private Credential credential;
 
 	// Address
 	@Column(nullable = true)
