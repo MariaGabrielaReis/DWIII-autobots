@@ -12,6 +12,9 @@ public class ProductUpdater {
 		if (!verifier.verify(updatedProduct.getName())) {
 			product.setName(updatedProduct.getName());
 		}
+		if (updatedProduct.getCategory() != null) {
+			product.setCategory(updatedProduct.getCategory());
+		}
 		if (updatedProduct.getType() != null) {
 			product.setType(updatedProduct.getType());
 		}
