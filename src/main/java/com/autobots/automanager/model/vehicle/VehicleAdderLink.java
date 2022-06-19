@@ -33,22 +33,23 @@ public class VehicleAdderLink implements AdderLink<Vehicle> {
 						.methodOn(VehicleController.class)
 						.getVehicles())
 				.withRel("vehicles");
+		vehicle.add(vehiclesListLink);
 
-		long vehicleBrandId = vehicle.getBrand().getId();
+		String vehicleBrandName = vehicle.getBrand().getName();
 		Link vehicleBrandLink = WebMvcLinkBuilder
 				.linkTo(WebMvcLinkBuilder
-						.methodOn(VehicleBrandController.class)
-						.getVehicleBrand(vehicleBrandId))
+						.methodOn(
+								VehicleController.class)
+						.getVehicleByBrand(
+								vehicleBrandName))
 				.withRel("vehicleBrand");
+		vehicle.add(vehicleBrandLink);
 
 		Link vehicleBrandsListLink = WebMvcLinkBuilder
 				.linkTo(WebMvcLinkBuilder
 						.methodOn(VehicleBrandController.class)
 						.getVehicleBrands())
 				.withRel("vehicleBrands");
-
-		vehicle.add(vehiclesListLink);
-		vehicle.add(vehicleBrandLink);
 		vehicle.add(vehicleBrandsListLink);
 	}
 }

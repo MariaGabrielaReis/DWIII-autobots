@@ -32,8 +32,7 @@ public class ServiceAdderLink implements AdderLink<Service> {
 				.linkTo(WebMvcLinkBuilder
 						.methodOn(ServiceController.class)
 						.getServices())
-				.withRel("allServices");
-
+				.withRel("services");
 		service.add(servicesListLink);
 
 		ServiceType[] serviceTypes = ServiceType.values();

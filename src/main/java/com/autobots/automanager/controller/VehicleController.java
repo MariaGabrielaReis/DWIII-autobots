@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.autobots.automanager.entity.Vehicle;
+import com.autobots.automanager.entity.VehicleBrand;
 import com.autobots.automanager.model.vehicle.VehicleAdderLink;
 import com.autobots.automanager.model.vehicle.VehicleUpdater;
+import com.autobots.automanager.repository.VehicleBrandRepository;
 import com.autobots.automanager.repository.VehicleRepository;
 
 @RestController
@@ -25,6 +27,8 @@ import com.autobots.automanager.repository.VehicleRepository;
 public class VehicleController {
 	@Autowired
 	private VehicleRepository vehicleRepository;
+	@Autowired
+	private VehicleBrandRepository vehicleBrandRepository;
 	@Autowired
 	private VehicleAdderLink vehicleAdderLink;
 	@Autowired
@@ -49,6 +53,22 @@ public class VehicleController {
 		Vehicle vehicle = vehicleOptional.get();
 		vehicleAdderLink.addLink(vehicle);
 		return new ResponseEntity<Vehicle>(vehicle, HttpStatus.FOUND);
+	}
+
+	@GetMapping("/brand/{brandName}")
+	public ResponseEntity<List<Vehicle>> getVehicleByBrand(@PathVariable String brandName) {
+		VehicleBrand vehicleBrand = vehicleBrandRepository.findByName(brandName);
+		if (vehicleBrand == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+
+		List<Vehicle> vehicles = vehicleRepository.findByBrand(vehicleBrand);
+
+		if (vehicles.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		vehicleAdderLink.addLink(vehicles);
+		return new ResponseEntity<List<Vehicle>>(vehicles, HttpStatus.FOUND);
 	}
 
 	@PostMapping("/create")
