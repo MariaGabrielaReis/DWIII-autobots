@@ -45,16 +45,16 @@ O servidor inciará localmente na porta 8080. Utilize o Insomnia ou o Postman pa
  <br>
 <div align="center">
  
-| Situação                |  Resultado                 |
-| :---------------------- | :------------------------- | 
-| Novo cliente            | ![]() |
-| Novo funcionário        | ![]() |
-| Todos os usuários       | ![]() |
-| Todos os clientes       | ![]() |
-| Todos os funcionários   | ![]() |
-| Usuário específico      | ![]() |
-| Alterar nome de usuário | ![]() |
-| Excluir usuário         | ![]() |
+| Situação                 |  Resultado                 |
+| :----------------------- | :------------------------- | 
+| Novo cliente             | ![](https://user-images.githubusercontent.com/69374340/174503668-75c77c8a-9a8d-4e0f-b177-290ad977d7e7.png) |
+| Novo funcionário         | ![](https://user-images.githubusercontent.com/69374340/174503706-4438e66e-a373-4778-af65-819ffaa2c372.png) |
+| Todos os usuários        | ![](https://user-images.githubusercontent.com/69374340/174503750-3d13dc7e-a274-4db2-9e93-a5a5ca2b81b6.png) |
+| Todos os clientes        | ![](https://user-images.githubusercontent.com/69374340/174503769-b77e03f0-bddb-4fbd-b1ee-d9d4e7e1cd86.png) |
+| Todos os funcionários    | ![](https://user-images.githubusercontent.com/69374340/174503780-2b973f0c-cecd-43ad-8aa2-39f6113abce8.png) |
+| Usuário específico       | ![](https://user-images.githubusercontent.com/69374340/174503812-fb98024e-b5a7-4c44-ad78-6e8c714f5412.png) |
+| Alterar dados de usuário | ![](https://user-images.githubusercontent.com/69374340/174503832-f565ebc3-3703-44b4-9979-8921c86ba712.png) |
+| Excluir usuário          | ![](https://user-images.githubusercontent.com/69374340/174503846-91118942-afc1-47be-96cb-b2e7338ab47b.png) |
 </div>
 </details>
  
