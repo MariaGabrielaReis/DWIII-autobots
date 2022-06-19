@@ -6,6 +6,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.autobots.automanager.entity.Credential;
 import com.autobots.automanager.entity.User;
 import com.autobots.automanager.model.enums.UserRole;
 import com.autobots.automanager.model.user.UserAdderLink;
@@ -31,6 +34,7 @@ public class UserController {
 	@Autowired
 	private UserUpdater userUpdater;
 
+	@PreAuthorize("hasAnyRole('admin', 'manager', 'employee', 'customer')")
 	@GetMapping("/")
 	public ResponseEntity<List<User>> getUsers() {
 		List<User> users = userRepository.findAll();
@@ -41,6 +45,7 @@ public class UserController {
 		return new ResponseEntity<List<User>>(users, HttpStatus.FOUND);
 	}
 
+	@PreAuthorize("hasAnyRole('admin', 'manager', 'employee', 'customer')")
 	@GetMapping("/{id}")
 	public ResponseEntity<User> getUser(@PathVariable long id) {
 		Optional<User> userOptional = userRepository.findById(id);
@@ -52,6 +57,7 @@ public class UserController {
 		return new ResponseEntity<User>(user, HttpStatus.FOUND);
 	}
 
+	@PreAuthorize("hasAnyRole('admin', 'manager')")
 	@GetMapping("/role/{roleName}")
 	public ResponseEntity<List<User>> getUserByRole(@PathVariable String roleName) {
 		List<User> customers;
@@ -63,8 +69,11 @@ public class UserController {
 			case "employee":
 				customers = userRepository.findByRole(UserRole.employee);
 				break;
-			case "supplier":
-				customers = userRepository.findByRole(UserRole.supplier);
+			case "admin":
+				customers = userRepository.findByRole(UserRole.admin);
+				break;
+			case "manager":
+				customers = userRepository.findByRole(UserRole.manager);
 				break;
 			default:
 				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -77,15 +86,28 @@ public class UserController {
 		return new ResponseEntity<List<User>>(customers, HttpStatus.FOUND);
 	}
 
+	@PreAuthorize("hasAnyRole('admin', 'manager')")
 	@PostMapping("/create")
 	public ResponseEntity<HttpStatus> createUser(@RequestBody User user) {
 		if (user.getId() != null) {
 			return new ResponseEntity<HttpStatus>(HttpStatus.CONFLICT);
 		}
-		userRepository.save(user);
-		return new ResponseEntity<HttpStatus>(HttpStatus.CREATED);
+
+		BCryptPasswordEncoder codificador = new BCryptPasswordEncoder();
+		try {
+			Credential credential = new Credential();
+			credential.setLogin(user.getCredential().getLogin());
+			String password = codificador.encode(user.getCredential().getPassword());
+			credential.setPassword(password);
+			user.setCredential(credential);
+			userRepository.save(user);
+			return new ResponseEntity<HttpStatus>(HttpStatus.CREATED);
+		} catch (Exception e) {
+			return new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);
+		}
 	}
 
+	@PreAuthorize("hasAnyRole('admin', 'manager', 'employee', 'customer')")
 	@PutMapping("/update")
 	public ResponseEntity<HttpStatus> updateUser(@RequestBody User updatedUser) {
 		Long id = updatedUser.getId();
@@ -102,6 +124,7 @@ public class UserController {
 		return new ResponseEntity<HttpStatus>(HttpStatus.OK);
 	}
 
+	@PreAuthorize("hasAnyRole('admin', 'manager', 'employee', 'customer')")
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<HttpStatus> deleteUser(@PathVariable Long id) {
 		Optional<User> userOptional = userRepository.findById(id);

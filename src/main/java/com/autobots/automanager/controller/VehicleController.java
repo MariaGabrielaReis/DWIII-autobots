@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,6 +35,7 @@ public class VehicleController {
 	@Autowired
 	private VehicleUpdater vehicleUpdater;
 
+	@PreAuthorize("hasAnyRole('admin', 'manager', 'employee', 'customer')")
 	@GetMapping("/")
 	public ResponseEntity<List<Vehicle>> getVehicles() {
 		List<Vehicle> vehicles = vehicleRepository.findAll();
@@ -44,6 +46,7 @@ public class VehicleController {
 		return new ResponseEntity<List<Vehicle>>(vehicles, HttpStatus.FOUND);
 	}
 
+	@PreAuthorize("hasAnyRole('admin', 'manager', 'employee', 'customer')")
 	@GetMapping("/{id}")
 	public ResponseEntity<Vehicle> getVehicle(@PathVariable long id) {
 		Optional<Vehicle> vehicleOptional = vehicleRepository.findById(id);
@@ -55,6 +58,7 @@ public class VehicleController {
 		return new ResponseEntity<Vehicle>(vehicle, HttpStatus.FOUND);
 	}
 
+	@PreAuthorize("hasAnyRole('admin', 'manager', 'employee')")
 	@GetMapping("/brand/{brandName}")
 	public ResponseEntity<List<Vehicle>> getVehicleByBrand(@PathVariable String brandName) {
 		VehicleBrand vehicleBrand = vehicleBrandRepository.findByName(brandName);
@@ -71,6 +75,7 @@ public class VehicleController {
 		return new ResponseEntity<List<Vehicle>>(vehicles, HttpStatus.FOUND);
 	}
 
+	@PreAuthorize("hasAnyRole('admin', 'manager', 'employee', 'customer')")
 	@PostMapping("/create")
 	public ResponseEntity<HttpStatus> createVehicle(@RequestBody Vehicle vehicle) {
 		if (vehicle.getId() != null) {
@@ -80,6 +85,7 @@ public class VehicleController {
 		return new ResponseEntity<HttpStatus>(HttpStatus.CREATED);
 	}
 
+	@PreAuthorize("hasAnyRole('admin', 'manager', 'employee', 'customer')")
 	@PutMapping("/update")
 	public ResponseEntity<HttpStatus> updateVehicle(@RequestBody Vehicle updatedVehicle) {
 		Long id = updatedVehicle.getId();
@@ -96,6 +102,7 @@ public class VehicleController {
 		return new ResponseEntity<HttpStatus>(HttpStatus.OK);
 	}
 
+	@PreAuthorize("hasAnyRole('admin', 'manager', 'employee', 'customer')")
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<HttpStatus> deleteVehicle(@PathVariable Long id) {
 		Optional<Vehicle> vehicleOptional = vehicleRepository.findById(id);

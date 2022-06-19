@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,6 +32,7 @@ public class ProductController {
 	@Autowired
 	private ProductUpdater productUpdater;
 
+	@PreAuthorize("hasAnyRole('admin', 'manager', 'employee', 'customer')")
 	@GetMapping("/")
 	public ResponseEntity<List<Product>> getProducts() {
 		List<Product> products = productRepository.findAll();
@@ -41,6 +43,7 @@ public class ProductController {
 		return new ResponseEntity<List<Product>>(products, HttpStatus.FOUND);
 	}
 
+	@PreAuthorize("hasAnyRole('admin', 'manager', 'employee', 'customer')")
 	@GetMapping("/{id}")
 	public ResponseEntity<Product> getProduct(@PathVariable long id) {
 		Optional<Product> productOptional = productRepository.findById(id);
@@ -52,6 +55,7 @@ public class ProductController {
 		return new ResponseEntity<Product>(product, HttpStatus.FOUND);
 	}
 
+	@PreAuthorize("hasAnyRole('admin', 'manager', 'employee', 'customer')")
 	@GetMapping("/type/{typeName}")
 	public ResponseEntity<List<Product>> getProductsByType(@PathVariable String typeName) {
 		List<Product> products;
@@ -80,6 +84,7 @@ public class ProductController {
 		return new ResponseEntity<List<Product>>(products, HttpStatus.FOUND);
 	}
 
+	@PreAuthorize("hasAnyRole('admin', 'manager')")
 	@PostMapping("/create")
 	public ResponseEntity<HttpStatus> createProduct(@RequestBody Product product) {
 		if (product.getId() != null) {
@@ -89,6 +94,7 @@ public class ProductController {
 		return new ResponseEntity<HttpStatus>(HttpStatus.CREATED);
 	}
 
+	@PreAuthorize("hasAnyRole('admin', 'manager')")
 	@PutMapping("/update")
 	public ResponseEntity<HttpStatus> updateProduct(@RequestBody Product updatedProduct) {
 		Long id = updatedProduct.getId();
@@ -105,6 +111,7 @@ public class ProductController {
 		return new ResponseEntity<HttpStatus>(HttpStatus.OK);
 	}
 
+	@PreAuthorize("hasAnyRole('admin', 'manager')")
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<HttpStatus> deleteProduct(@PathVariable Long id) {
 		Optional<Product> productOptional = productRepository.findById(id);

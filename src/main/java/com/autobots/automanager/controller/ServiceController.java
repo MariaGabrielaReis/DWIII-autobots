@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,6 +32,7 @@ public class ServiceController {
 	@Autowired
 	private ServiceUpdater serviceUpdater;
 
+	@PreAuthorize("hasAnyRole('admin', 'manager', 'employee', 'customer')")
 	@GetMapping("/")
 	public ResponseEntity<List<Service>> getServices() {
 		List<Service> services = serviceRepository.findAll();
@@ -41,6 +43,7 @@ public class ServiceController {
 		return new ResponseEntity<List<Service>>(services, HttpStatus.FOUND);
 	}
 
+	@PreAuthorize("hasAnyRole('admin', 'manager', 'employee', 'customer')")
 	@GetMapping("/{id}")
 	public ResponseEntity<Service> getService(@PathVariable long id) {
 		Optional<Service> serviceOptional = serviceRepository.findById(id);
@@ -52,6 +55,7 @@ public class ServiceController {
 		return new ResponseEntity<Service>(service, HttpStatus.FOUND);
 	}
 
+	@PreAuthorize("hasAnyRole('admin', 'manager', 'employee', 'customer')")
 	@GetMapping("/type/{typeName}")
 	public ResponseEntity<List<Service>> getServicesByType(@PathVariable String typeName) {
 		List<Service> services;
@@ -93,6 +97,7 @@ public class ServiceController {
 		return new ResponseEntity<List<Service>>(services, HttpStatus.FOUND);
 	}
 
+	@PreAuthorize("hasAnyRole('admin', 'manager')")
 	@PostMapping("/create")
 	public ResponseEntity<HttpStatus> createService(@RequestBody Service service) {
 		if (service.getId() != null) {
@@ -102,6 +107,7 @@ public class ServiceController {
 		return new ResponseEntity<HttpStatus>(HttpStatus.CREATED);
 	}
 
+	@PreAuthorize("hasAnyRole('admin', 'manager')")
 	@PutMapping("/update")
 	public ResponseEntity<HttpStatus> updateService(@RequestBody Service updatedService) {
 		Long id = updatedService.getId();
@@ -118,6 +124,7 @@ public class ServiceController {
 		return new ResponseEntity<HttpStatus>(HttpStatus.OK);
 	}
 
+	@PreAuthorize("hasAnyRole('admin', 'manager')")
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<HttpStatus> deleteService(@PathVariable Long id) {
 		Optional<Service> serviceOptional = serviceRepository.findById(id);

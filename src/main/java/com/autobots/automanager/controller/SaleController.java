@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,6 +28,7 @@ public class SaleController {
 	@Autowired
 	private SaleAdderLink saleAdderLink;
 
+	@PreAuthorize("hasAnyRole('admin', 'manager')")
 	@GetMapping("/")
 	public ResponseEntity<List<Sale>> getSales() {
 		List<Sale> sales = saleRepository.findAll();
@@ -37,6 +39,7 @@ public class SaleController {
 		return new ResponseEntity<List<Sale>>(sales, HttpStatus.FOUND);
 	}
 
+	@PreAuthorize("hasAnyRole('admin', 'manager', 'employee', 'customer')")
 	@GetMapping("/{id}")
 	public ResponseEntity<Sale> getSale(@PathVariable long id) {
 		Optional<Sale> saleOptional = saleRepository.findById(id);
@@ -48,6 +51,7 @@ public class SaleController {
 		return new ResponseEntity<Sale>(sale, HttpStatus.FOUND);
 	}
 
+	@PreAuthorize("hasAnyRole('admin', 'manager', 'employee')")
 	@GetMapping("/employee/{id}")
 	public ResponseEntity<List<Sale>> getSalesByEmployeeId(@PathVariable long id) {
 		List<Sale> sales = saleRepository.findByEmployeeId(id);
@@ -58,6 +62,7 @@ public class SaleController {
 		return new ResponseEntity<List<Sale>>(sales, HttpStatus.FOUND);
 	}
 
+	@PreAuthorize("hasAnyRole('admin', 'manager', 'employee', 'customer')")
 	@GetMapping("/customer/{id}")
 	public ResponseEntity<List<Sale>> getSalesByCustomerId(@PathVariable long id) {
 		List<Sale> sales = saleRepository.findByCustomerId(id);
@@ -68,6 +73,7 @@ public class SaleController {
 		return new ResponseEntity<List<Sale>>(sales, HttpStatus.FOUND);
 	}
 
+	@PreAuthorize("hasAnyRole('admin', 'manager', 'employee')")
 	@PostMapping("/create")
 	public ResponseEntity<HttpStatus> createProduct(@RequestBody Sale sale) {
 		if (sale.getId() != null) {

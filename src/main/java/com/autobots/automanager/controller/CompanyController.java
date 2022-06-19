@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,6 +35,7 @@ public class CompanyController {
 	@Autowired
 	private CompanyUpdater companyUpdater;
 
+	@PreAuthorize("hasAnyRole('admin')")
 	@GetMapping("/")
 	public ResponseEntity<List<Company>> getCompanies() {
 		List<Company> companies = companyRepository.findAll();
@@ -44,6 +46,7 @@ public class CompanyController {
 		return new ResponseEntity<List<Company>>(companies, HttpStatus.FOUND);
 	}
 
+	@PreAuthorize("hasAnyRole('admin')")
 	@GetMapping("/{id}")
 	public ResponseEntity<Company> getCompany(@PathVariable long id) {
 		Optional<Company> companyOptional = companyRepository.findById(id);
@@ -55,6 +58,7 @@ public class CompanyController {
 		return new ResponseEntity<Company>(company, HttpStatus.FOUND);
 	}
 
+	@PreAuthorize("hasAnyRole('admin')")
 	@PostMapping("/create")
 	public ResponseEntity<HttpStatus> createCompany(@RequestBody Company company) {
 		if (company.getId() != null) {
@@ -64,6 +68,7 @@ public class CompanyController {
 		return new ResponseEntity<HttpStatus>(HttpStatus.CREATED);
 	}
 
+	@PreAuthorize("hasAnyRole('admin', 'manager')")
 	@PutMapping("/update")
 	public ResponseEntity<HttpStatus> updateCompany(@RequestBody Company updatedCompany) {
 		Long id = updatedCompany.getId();
@@ -80,6 +85,7 @@ public class CompanyController {
 		return new ResponseEntity<HttpStatus>(HttpStatus.OK);
 	}
 
+	@PreAuthorize("hasAnyRole('admin', 'manager')")
 	@PutMapping("/addUserToCompany/{companyId}")
 	public ResponseEntity<HttpStatus> addUserToCompany(@PathVariable long companyId, @RequestBody User user) {
 		Optional<Company> companyOptional = companyRepository.findById(companyId);
@@ -94,6 +100,7 @@ public class CompanyController {
 		return new ResponseEntity<HttpStatus>(HttpStatus.OK);
 	}
 
+	@PreAuthorize("hasAnyRole('admin', 'manager')")
 	@PutMapping("/addProductToCompany/{companyId}")
 	public ResponseEntity<HttpStatus> addProductToCompany(@PathVariable long companyId, @RequestBody Product product) {
 		Optional<Company> companyOptional = companyRepository.findById(companyId);
@@ -122,6 +129,7 @@ public class CompanyController {
 		return new ResponseEntity<HttpStatus>(HttpStatus.OK);
 	}
 
+	@PreAuthorize("hasAnyRole('admin', 'manager')")
 	@PutMapping("/addSaleToCompany/{companyId}")
 	public ResponseEntity<HttpStatus> addSaleToCompany(@PathVariable long companyId, @RequestBody Sale sale) {
 		Optional<Company> companyOptional = companyRepository.findById(companyId);
@@ -136,6 +144,7 @@ public class CompanyController {
 		return new ResponseEntity<HttpStatus>(HttpStatus.OK);
 	}
 
+	@PreAuthorize("hasAnyRole('admin')")
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<HttpStatus> deleteCompany(@PathVariable Long id) {
 		Optional<Company> companyOptional = companyRepository.findById(id);
