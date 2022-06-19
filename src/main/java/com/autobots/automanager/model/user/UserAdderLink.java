@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import com.autobots.automanager.controller.UserController;
 import com.autobots.automanager.entity.User;
 import com.autobots.automanager.model.AdderLink;
+import com.autobots.automanager.model.enums.UserRole;
 
 @Component
 public class UserAdderLink implements AdderLink<User> {
@@ -27,36 +28,23 @@ public class UserAdderLink implements AdderLink<User> {
 
 	@Override
 	public void addLink(User user) {
-		Link allUsersListLink = WebMvcLinkBuilder
+		Link usersListLink = WebMvcLinkBuilder
 				.linkTo(WebMvcLinkBuilder
 						.methodOn(UserController.class)
 						.getUsers())
-				.withRel("allUsers");
+				.withRel("users");
+		user.add(usersListLink);
 
-		Link usersCustomersListLink = WebMvcLinkBuilder
-				.linkTo(WebMvcLinkBuilder
-						.methodOn(UserController.class)
-						.getUserByRole(
-								"customer"))
-				.withRel("customers");
+		UserRole[] userRoles = UserRole.values();
 
-		Link usersEmployeesListLink = WebMvcLinkBuilder
-				.linkTo(WebMvcLinkBuilder
-						.methodOn(UserController.class)
-						.getUserByRole(
-								"employee"))
-				.withRel("employees");
-
-		Link usersSuppliersListLink = WebMvcLinkBuilder
-				.linkTo(WebMvcLinkBuilder
-						.methodOn(UserController.class)
-						.getUserByRole(
-								"supplier"))
-				.withRel("suppliers");
-
-		user.add(allUsersListLink);
-		user.add(usersCustomersListLink);
-		user.add(usersEmployeesListLink);
-		user.add(usersSuppliersListLink);
+		for (UserRole role : userRoles) {
+			Link userRolesListLink = WebMvcLinkBuilder
+					.linkTo(WebMvcLinkBuilder
+							.methodOn(
+									UserController.class)
+							.getUserByRole(role.toString()))
+					.withRel(role.toString() + "s");
+			user.add(userRolesListLink);
+		}
 	}
 }

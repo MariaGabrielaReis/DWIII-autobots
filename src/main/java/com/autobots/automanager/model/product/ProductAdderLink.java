@@ -33,6 +33,7 @@ public class ProductAdderLink implements AdderLink<Product> {
 						.methodOn(ProductController.class)
 						.getProducts())
 				.withRel("products");
+		product.add(productsListLink);
 
 		ProductType[] productTypes = ProductType.values();
 
@@ -45,7 +46,5 @@ public class ProductAdderLink implements AdderLink<Product> {
 					.withRel(type.toString());
 			product.add(productTypeListLink);
 		}
-
-		product.add(productsListLink);
 	}
 }
