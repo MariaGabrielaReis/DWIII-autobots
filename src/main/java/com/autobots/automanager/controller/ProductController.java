@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.autobots.automanager.entity.Product;
+import com.autobots.automanager.model.enums.ProductCategory;
+import com.autobots.automanager.model.enums.ProductType;
 import com.autobots.automanager.model.product.ProductAdderLink;
 import com.autobots.automanager.model.product.ProductUpdater;
 import com.autobots.automanager.repository.ProductRepository;
@@ -51,15 +53,32 @@ public class ProductController {
 		return new ResponseEntity<Product>(product, HttpStatus.FOUND);
 	}
 
-	@GetMapping("/category/{categoryName}")
-	public ResponseEntity<Product> getProductsByCategory(@PathVariable long id) {
-		Optional<Product> productOptional = productRepository.findById(id);
-		if (productOptional.isEmpty()) {
+	@GetMapping("/type/{typeName}")
+	public ResponseEntity<List<Product>> getProductsByType(@PathVariable String typeName) {
+		List<Product> products;
+
+		switch (typeName) {
+			case "filter":
+				products = productRepository.findByType(ProductType.filter);
+				break;
+			case "lamp":
+				products = productRepository.findByType(ProductType.lamp);
+				break;
+			case "oil":
+				products = productRepository.findByType(ProductType.oil);
+				break;
+			case "other":
+				products = productRepository.findByType(ProductType.other);
+				break;
+			default:
+				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+
+		if (products.isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		Product product = productOptional.get();
-		productAdderLink.addLink(product);
-		return new ResponseEntity<Product>(product, HttpStatus.FOUND);
+		productAdderLink.addLink(products);
+		return new ResponseEntity<List<Product>>(products, HttpStatus.FOUND);
 	}
 
 	@PostMapping("/create")

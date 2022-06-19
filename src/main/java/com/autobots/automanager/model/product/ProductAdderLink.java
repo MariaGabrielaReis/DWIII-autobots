@@ -32,6 +32,35 @@ public class ProductAdderLink implements AdderLink<Product> {
 						.methodOn(ProductController.class)
 						.getProducts())
 				.withRel("products");
+
+		Link productTypeFilterListLink = WebMvcLinkBuilder
+				.linkTo(WebMvcLinkBuilder
+						.methodOn(ProductController.class)
+						.getProductsByType("filter"))
+				.withRel("filters");
+
+		Link productTypeLampListLink = WebMvcLinkBuilder
+				.linkTo(WebMvcLinkBuilder
+						.methodOn(ProductController.class)
+						.getProductsByType("lamp"))
+				.withRel("lamps");
+
+		Link productTypeOilListLink = WebMvcLinkBuilder
+				.linkTo(WebMvcLinkBuilder
+						.methodOn(ProductController.class)
+						.getProductsByType("oil"))
+				.withRel("oils");
+
+		Link productTypeOtherListLink = WebMvcLinkBuilder
+				.linkTo(WebMvcLinkBuilder
+						.methodOn(ProductController.class)
+						.getProductsByType("other"))
+				.withRel("others");
+
 		product.add(productsListLink);
+		product.add(productTypeFilterListLink);
+		product.add(productTypeLampListLink);
+		product.add(productTypeOilListLink);
+		product.add(productTypeOtherListLink);
 	}
 }
