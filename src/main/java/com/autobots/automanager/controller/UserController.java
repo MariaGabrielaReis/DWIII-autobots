@@ -86,7 +86,6 @@ public class UserController {
 		return new ResponseEntity<List<User>>(customers, HttpStatus.FOUND);
 	}
 
-	@PreAuthorize("hasAnyRole('admin', 'manager')")
 	@PostMapping("/create")
 	public ResponseEntity<HttpStatus> createUser(@RequestBody User user) {
 		if (user.getId() != null) {

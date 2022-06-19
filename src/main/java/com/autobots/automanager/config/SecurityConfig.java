@@ -30,9 +30,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   @Autowired
   private Provider jwtProvider = new Provider();
 
+  private static final String[] publicRoutes = { "/", "/users/create", "/users/" };
+
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     http.cors().and().csrf().disable();
+
+    http.authorizeHttpRequests().antMatchers(publicRoutes).permitAll().anyRequest().authenticated();
 
     http.addFilter(new CredentialAuthenticator(authenticationManager(), jwtProvider));
     http.addFilter(new Authorizer(authenticationManager(), jwtProvider, userDetailsServiceImplementation));
