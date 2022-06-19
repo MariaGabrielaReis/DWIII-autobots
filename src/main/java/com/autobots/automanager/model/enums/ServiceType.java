@@ -1,11 +1,12 @@
 package com.autobots.automanager.model.enums;
 
-public enum Service {
+public enum ServiceType {
   avaliation, // "Avaliação"
-  oilChangem, // "Troca de óleo"
+  oilChange, // "Troca de óleo"
   filterChange, // "Troca de filtro"
   airConditioningCleaning, // "Higienização de ar condicionado"
   simpleWash, // "Lavagem simples"
   completeWash, // "Lavagem completa"
-  maintenance // "Manutenção"
+  maintenance, // "Manutenção",
+  other // "Outros"
 }
