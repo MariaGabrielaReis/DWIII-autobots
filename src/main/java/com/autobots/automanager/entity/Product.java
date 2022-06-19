@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import org.springframework.hateoas.RepresentationModel;
 
 import com.autobots.automanager.model.enums.ProductBrand;
+import com.autobots.automanager.model.enums.ProductCategory;
 import com.autobots.automanager.model.enums.ProductType;
 
 import lombok.Getter;
@@ -23,6 +24,8 @@ public class Product extends RepresentationModel<Product> {
 	private Long id;
 	@Column(nullable = false)
 	private String name;
+	@Column(nullable = false)
+	private ProductCategory category;
 	@Column(nullable = false)
 	private ProductType type;
 	@Column(nullable = false)

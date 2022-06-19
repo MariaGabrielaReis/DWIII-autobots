@@ -51,6 +51,17 @@ public class ProductController {
 		return new ResponseEntity<Product>(product, HttpStatus.FOUND);
 	}
 
+	@GetMapping("/category/{categoryName}")
+	public ResponseEntity<Product> getProductsByCategory(@PathVariable long id) {
+		Optional<Product> productOptional = productRepository.findById(id);
+		if (productOptional.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		Product product = productOptional.get();
+		productAdderLink.addLink(product);
+		return new ResponseEntity<Product>(product, HttpStatus.FOUND);
+	}
+
 	@PostMapping("/create")
 	public ResponseEntity<HttpStatus> createProduct(@RequestBody Product product) {
 		if (product.getId() != null) {

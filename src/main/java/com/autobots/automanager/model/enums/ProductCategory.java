@@ -1,6 +1,6 @@
 package com.autobots.automanager.model.enums;
 
-public enum Product {
+public enum ProductCategory {
   oil, // "Óleo"
   airFilter, // "Filtro de ar"
   oilFilter, // "Filtro de óleo"
