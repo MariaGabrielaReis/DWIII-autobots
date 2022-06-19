@@ -8,50 +8,50 @@ import org.springframework.stereotype.Component;
 public class UserUpdater {
 	private NullStringVerifier verifier = new NullStringVerifier();
 
-	public void update(User customer, User updatedCustomer) {
-		if (updatedCustomer.getRole() != null) {
-			customer.setRole(updatedCustomer.getRole());
+	public void update(User user, User updatedUser) {
+		if (updatedUser.getRole() != null) {
+			user.setRole(updatedUser.getRole());
 		}
-		if (!verifier.verify(updatedCustomer.getName())) {
-			customer.setName(updatedCustomer.getName());
+		if (!verifier.verify(updatedUser.getName())) {
+			user.setName(updatedUser.getName());
 		}
-		if (!verifier.verify(updatedCustomer.getNickname())) {
-			customer.setNickname(updatedCustomer.getNickname());
+		if (!verifier.verify(updatedUser.getNickname())) {
+			user.setNickname(updatedUser.getNickname());
 		}
-		if (updatedCustomer.getCpf() != null) {
-			customer.setCpf(updatedCustomer.getCpf());
+		if (updatedUser.getCpf() != null) {
+			user.setCpf(updatedUser.getCpf());
 		}
-		if (updatedCustomer.getRg() != null) {
-			customer.setRg(updatedCustomer.getRg());
+		if (updatedUser.getRg() != null) {
+			user.setRg(updatedUser.getRg());
 		}
-		if (updatedCustomer.getPhone() != null) {
-			customer.setPhone(updatedCustomer.getPhone());
+		if (updatedUser.getPhone() != null) {
+			user.setPhone(updatedUser.getPhone());
 		}
-		if (updatedCustomer.getEmail() != null) {
-			customer.setEmail(updatedCustomer.getEmail());
+		if (updatedUser.getEmail() != null) {
+			user.setEmail(updatedUser.getEmail());
 		}
-		if (updatedCustomer.getBirthDate() != null) {
-			customer.setBirthDate(updatedCustomer.getBirthDate());
+		if (updatedUser.getBirthDate() != null) {
+			user.setBirthDate(updatedUser.getBirthDate());
 		}
 
 		// Address
-		if (!verifier.verify(updatedCustomer.getState())) {
-			customer.setState(updatedCustomer.getState());
+		if (!verifier.verify(updatedUser.getState())) {
+			user.setState(updatedUser.getState());
 		}
-		if (!verifier.verify(updatedCustomer.getCity())) {
-			customer.setCity(updatedCustomer.getCity());
+		if (!verifier.verify(updatedUser.getCity())) {
+			user.setCity(updatedUser.getCity());
 		}
-		if (!verifier.verify(updatedCustomer.getDistrict())) {
-			customer.setDistrict(updatedCustomer.getDistrict());
+		if (!verifier.verify(updatedUser.getDistrict())) {
+			user.setDistrict(updatedUser.getDistrict());
 		}
-		if (!verifier.verify(updatedCustomer.getStreet())) {
-			customer.setStreet(updatedCustomer.getStreet());
+		if (!verifier.verify(updatedUser.getStreet())) {
+			user.setStreet(updatedUser.getStreet());
 		}
-		if (updatedCustomer.getNumber() != null) {
-			customer.setNumber(updatedCustomer.getNumber());
+		if (updatedUser.getNumber() != null) {
+			user.setNumber(updatedUser.getNumber());
 		}
-		if (!verifier.verify(updatedCustomer.getComplement())) {
-			customer.setComplement(updatedCustomer.getComplement());
+		if (!verifier.verify(updatedUser.getComplement())) {
+			user.setComplement(updatedUser.getComplement());
 		}
 	}
 }
