@@ -52,34 +52,29 @@ public class UserController {
 		return new ResponseEntity<User>(user, HttpStatus.FOUND);
 	}
 
-	@GetMapping("/customers")
-	public ResponseEntity<List<User>> getCustomers() {
-		List<User> customers = userRepository.findByRole(UserRole.customer);
+	@GetMapping("/role/{roleName}")
+	public ResponseEntity<List<User>> getUserByRole(@PathVariable String roleName) {
+		List<User> customers;
+
+		switch (roleName) {
+			case "customer":
+				customers = userRepository.findByRole(UserRole.customer);
+				break;
+			case "employee":
+				customers = userRepository.findByRole(UserRole.employee);
+				break;
+			case "supplier":
+				customers = userRepository.findByRole(UserRole.supplier);
+				break;
+			default:
+				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+
 		if (customers.isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		userAdderLink.addLink(customers);
 		return new ResponseEntity<List<User>>(customers, HttpStatus.FOUND);
-	}
-
-	@GetMapping("/employees")
-	public ResponseEntity<List<User>> getEmployees() {
-		List<User> employees = userRepository.findByRole(UserRole.employee);
-		if (employees.isEmpty()) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-		userAdderLink.addLink(employees);
-		return new ResponseEntity<List<User>>(employees, HttpStatus.FOUND);
-	}
-
-	@GetMapping("/suppliers")
-	public ResponseEntity<List<User>> getSuppliers() {
-		List<User> suppliers = userRepository.findByRole(UserRole.supplier);
-		if (suppliers.isEmpty()) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-		userAdderLink.addLink(suppliers);
-		return new ResponseEntity<List<User>>(suppliers, HttpStatus.FOUND);
 	}
 
 	@PostMapping("/create")

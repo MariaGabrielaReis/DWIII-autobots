@@ -36,19 +36,22 @@ public class UserAdderLink implements AdderLink<User> {
 		Link usersCustomersListLink = WebMvcLinkBuilder
 				.linkTo(WebMvcLinkBuilder
 						.methodOn(UserController.class)
-						.getCustomers())
+						.getUserByRole(
+								"customer"))
 				.withRel("customers");
 
 		Link usersEmployeesListLink = WebMvcLinkBuilder
 				.linkTo(WebMvcLinkBuilder
 						.methodOn(UserController.class)
-						.getEmployees())
+						.getUserByRole(
+								"employee"))
 				.withRel("employees");
 
 		Link usersSuppliersListLink = WebMvcLinkBuilder
 				.linkTo(WebMvcLinkBuilder
 						.methodOn(UserController.class)
-						.getSuppliers())
+						.getUserByRole(
+								"supplier"))
 				.withRel("suppliers");
 
 		user.add(allUsersListLink);
