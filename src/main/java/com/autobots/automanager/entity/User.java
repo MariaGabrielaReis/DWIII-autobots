@@ -1,7 +1,6 @@
 package com.autobots.automanager.entity;
 
 import java.time.LocalDateTime;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
+import com.autobots.automanager.model.enums.DocumentType;
 import com.autobots.automanager.model.enums.UserRole;
 
 import org.springframework.hateoas.RepresentationModel;
@@ -32,10 +32,10 @@ public class User extends RepresentationModel<User> {
 	private String name;
 	@Column(nullable = true)
 	private String nickname;
-	@Column(unique = true, nullable = true)
-	private Long cpf;
+	@Enumerated(EnumType.ORDINAL)
+	private DocumentType documentType;
 	@Column(nullable = true)
-	private Long rg;
+	private String documentValue;
 	@Column(nullable = true)
 	private Long phone;
 	@Column(nullable = false)
