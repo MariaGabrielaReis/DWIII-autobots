@@ -18,11 +18,11 @@ public class UserUpdater {
 		if (!verifier.verify(updatedUser.getNickname())) {
 			user.setNickname(updatedUser.getNickname());
 		}
-		if (updatedUser.getCpf() != null) {
-			user.setCpf(updatedUser.getCpf());
+		if (updatedUser.getDocumentType() != null) {
+			user.setDocumentType(updatedUser.getDocumentType());
 		}
-		if (updatedUser.getRg() != null) {
-			user.setRg(updatedUser.getRg());
+		if (updatedUser.getDocumentValue() != null) {
+			user.setDocumentValue(updatedUser.getDocumentValue());
 		}
 		if (updatedUser.getPhone() != null) {
 			user.setPhone(updatedUser.getPhone());
