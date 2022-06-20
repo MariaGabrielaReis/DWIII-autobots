@@ -109,14 +109,14 @@ O servidor inciará localmente na porta 8080. Utilize o Insomnia ou o Postman pa
  <br>
 <div align="center">
  
-| Situação                     |  Resultado                 |
-| :--------------------------- | :------------------------- | 
-| Novo serviço                 | ![]() |
-| Todos os serviços            | ![]() |
-| Todos os serviços de um tipo | ![]() |
-| Serviço específico           | ![]() |
-| Alterar nome de serviço      | ![]() |
-| Excluir serviço              | ![]() |
+| Situação                     |  Resultado                                                                                                 |
+| :--------------------------- | :--------------------------------------------------------------------------------------------------------- | 
+| Novo serviço                 | ![](https://user-images.githubusercontent.com/69374340/174504522-510bab53-d12b-4bc3-bc04-e3741b174e15.png) |
+| Todos os serviços            | ![](https://user-images.githubusercontent.com/69374340/174504533-36a60a76-0116-4250-b334-e9f102ed4a8a.png) |
+| Todos os serviços de um tipo | ![](https://user-images.githubusercontent.com/69374340/174504554-a9ae4582-49f8-43a4-a664-ac13812d6ac9.png) |
+| Serviço específico           | ![](https://user-images.githubusercontent.com/69374340/174504580-4bb23691-02fb-49bc-97d3-b37bfef4951e.png) |
+| Alterar nome de serviço      | ![](https://user-images.githubusercontent.com/69374340/174504596-dd1387a6-bb2b-48f1-996c-c92fcc69701c.png) |
+| Excluir serviço              | ![](https://user-images.githubusercontent.com/69374340/174504620-20bef8e7-e3a2-4a7e-a300-384aa3e44fbb.png) |
 </div>
 </details>
  
@@ -125,32 +125,32 @@ O servidor inciará localmente na porta 8080. Utilize o Insomnia ou o Postman pa
  <br>
 <div align="center">
  
-| Situação                                    |  Resultado                 |
-| :------------------------------------------ | :------------------------- | 
-| Nova venda                                  | ![]() |
-| Todas as vendas                             | ![]() |
-| Todos as vendas que um funcionário realizou | ![]() |
-| Todos as vendas que um cliente realizou     | ![]() |
-| Venda específica                            | ![]() |
+| Situação                             |  Resultado                                                                                                 |
+| :----------------------------------- | :--------------------------------------------------------------------------------------------------------- | 
+| Nova venda                           | ![](https://user-images.githubusercontent.com/69374340/174504716-d4f7fa4d-b8cc-404a-ae62-9adc85e8bc8f.png) |
+| Todas as vendas                      | ![](https://user-images.githubusercontent.com/69374340/174504769-63b16aba-704f-4533-9f47-b37dc03e1a50.png) |
+| Vendas realizadas por um funcionário | ![](https://user-images.githubusercontent.com/69374340/174504915-10179d71-7577-4bcf-9e28-2c5dd9796485.png) |
+| Compras feitas por um cliente        | ![](https://user-images.githubusercontent.com/69374340/174504951-0483d158-fe42-43cc-ba81-9b62364d8d40.png) |
+| Venda específica                     | ![](https://user-images.githubusercontent.com/69374340/174504791-187b7d97-8253-423a-a45b-0c949f9bbe16.png) |
 </div>
 </details>
- 
+
 <details>
  <summary>Endpoints disponíveis para gerenciamento de <b>Empresas</b></summary>
  <br>
 <div align="center">
  
-| Situação                       |  Resultado                 |
-| :----------------------------- | :------------------------- | 
-| Nova empresa                   | ![]() |
-| Todas as empresas              | ![]() |
-| Empresa específica             | ![]() |
-| Associar usuário a uma empresa | ![]() |
-| Associar produto a uma empresa | ![]() |
-| Associar serviço a uma empresa | ![]() |
-| Associar venda a uma empresa   | ![]() |
-| Alterar nome de empresa        | ![]() |
-| Excluir empresa                | ![]() |
+| Situação                       |  Resultado                                                                                                 |
+| :----------------------------- | :--------------------------------------------------------------------------------------------------------- | 
+| Nova empresa                   | ![](https://user-images.githubusercontent.com/69374340/174505027-ffef3830-87b1-4219-aca9-ff12e3a43f0e.png) |
+| Todas as empresas              | ![](https://user-images.githubusercontent.com/69374340/174505041-88924d8b-63e3-40b7-b552-79464d61d24f.png) |
+| Empresa específica             | ![](https://user-images.githubusercontent.com/69374340/174505059-8043f731-cd22-488d-b8fa-1b35ff807f3a.png) |
+| Associar usuário a uma empresa | ![](https://user-images.githubusercontent.com/69374340/174505091-7cdf880c-c85a-4490-9fe3-f2776fb3695e.png) |
+| Associar produto a uma empresa | ![](https://user-images.githubusercontent.com/69374340/174505109-e83cd1f3-3e0a-4094-afa0-7a0a9c3067c5.png) |
+| Associar serviço a uma empresa | ![](https://user-images.githubusercontent.com/69374340/174505145-5a581eb2-1ec6-4d36-a902-62127032b650.png) |
+| Associar venda a uma empresa   | ![](https://user-images.githubusercontent.com/69374340/174505348-0dbc2c5f-d7e8-4469-8760-45e9189bdc28.png) |
+| Alterar nome de empresa        | ![](https://user-images.githubusercontent.com/69374340/174505424-66210abf-9dce-4098-b843-00b1b8029109.png) |
+| Excluir empresa                | ![](https://user-images.githubusercontent.com/69374340/174505442-592704fa-a420-4b6c-9f57-e0fc01b3d97c.png) |
 </div>
 </details>
 
