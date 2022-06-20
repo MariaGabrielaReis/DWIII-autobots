@@ -11,14 +11,17 @@
 <span id="projeto">
   
 # :bookmark_tabs: Sobre o projeto
-Este é um sistema para gerenciamento de uma loja de autopeças que consiste em uma API baseada na arquitetura de microsserviço com Java, aplicando conceitos do SOLID e padrões de projeto adequados que possibilitam listagem, cadastro, exclusão e alteração de informações sobre clientes, produtos, serviços, veículos e marcas de veículos.
+Este é um sistema para gerenciamento de uma loja de autopeças que consiste em uma API baseada na arquitetura de microsserviço com Java, aplicando conceitos do SOLID e padrões de projeto adequados que possibilitam listagem, cadastro, exclusão e alteração de informações sobre usuários, produtos, serviços, veículos, vendas e empresas.
  
-> 💡 Atividade IV: implementar autenticação e autorização via Json Web Token (JWT) para os tipos de usuários presentes no sistema:
-> - ✔️ Administrador: pode fazer todas as operações de CRUD (incluindo adicionar ou remover usuários administradores);
-> - ✔️ Gerente: acesso ao CRUD de gerentes, vendedores e clientes, bem como sobre serviços, vendas e mercadorias;
-> - ✔️ Vendedor: acesso ao CRUD de clientes, criar vendas e ler dados sobre serviços, mercadorias e informações do próprio cadastro;
-> - ✔️ Cliente: acesso a informações do próprio cadastro, assim como para vendas em que participou como consumidor.
-
+> 💡 Atividade: criar endpoints e aplicar os níveis de maturidade de API RESTFul além de autenticação/autorização com JWT:
+> - ✔️ CRUD de **usuários**
+> - ✔️ CRUD de **produtos**
+> - ✔️ CRUD de **serviços**
+> - ✔️ CRUD de **marca de veículos**
+> - ✔️ CRUD de **veículos**
+> - ✔️ CRUD de **vendas**
+> - ✔️ CRUD de **empresas**
+ 
 <span id="requisitos">
 
 # :gear: Como rodar
