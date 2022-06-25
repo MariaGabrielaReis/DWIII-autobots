@@ -58,6 +58,17 @@ public class VehicleController {
 		return new ResponseEntity<Vehicle>(vehicle, HttpStatus.FOUND);
 	}
 
+	@PreAuthorize("hasAnyRole('admin', 'manager', 'employee', 'customer')")
+	@GetMapping("/user/{id}")
+	public ResponseEntity<List<Vehicle>> getVehiclesByUserId(@PathVariable long id) {
+		List<Vehicle> vehicles = vehicleRepository.findByOwnerId(id);
+		if (vehicles.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		vehicleAdderLink.addLink(vehicles);
+		return new ResponseEntity<List<Vehicle>>(vehicles, HttpStatus.FOUND);
+	}
+
 	@PreAuthorize("hasAnyRole('admin', 'manager', 'employee')")
 	@GetMapping("/brand/{brandName}")
 	public ResponseEntity<List<Vehicle>> getVehicleByBrand(@PathVariable String brandName) {
