@@ -75,7 +75,7 @@ public class SaleController {
 
 	@PreAuthorize("hasAnyRole('admin', 'manager', 'employee')")
 	@PostMapping("/create")
-	public ResponseEntity<HttpStatus> createProduct(@RequestBody Sale sale) {
+	public ResponseEntity<HttpStatus> createSale(@RequestBody Sale sale) {
 		if (sale.getId() != null) {
 			return new ResponseEntity<HttpStatus>(HttpStatus.CONFLICT);
 		}
