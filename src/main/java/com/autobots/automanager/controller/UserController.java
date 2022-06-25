@@ -34,7 +34,7 @@ public class UserController {
 	@Autowired
 	private UserUpdater userUpdater;
 
-	@PreAuthorize("hasAnyRole('admin', 'manager', 'employee', 'customer')")
+	@PreAuthorize("hasAnyRole('admin', 'manager', 'employee')")
 	@GetMapping("/")
 	public ResponseEntity<List<User>> getUsers() {
 		List<User> users = userRepository.findAll();
@@ -57,7 +57,7 @@ public class UserController {
 		return new ResponseEntity<User>(user, HttpStatus.FOUND);
 	}
 
-	@PreAuthorize("hasAnyRole('admin', 'manager')")
+	@PreAuthorize("hasAnyRole('admin', 'manager', 'employee')")
 	@GetMapping("/role/{roleName}")
 	public ResponseEntity<List<User>> getUserByRole(@PathVariable String roleName) {
 		List<User> customers;
@@ -86,6 +86,7 @@ public class UserController {
 		return new ResponseEntity<List<User>>(customers, HttpStatus.FOUND);
 	}
 
+	@PreAuthorize("hasAnyRole('admin', 'manager', 'employee')")
 	@PostMapping("/create")
 	public ResponseEntity<HttpStatus> createUser(@RequestBody User user) {
 		if (user.getId() != null) {

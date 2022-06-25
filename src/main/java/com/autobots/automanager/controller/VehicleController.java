@@ -35,7 +35,7 @@ public class VehicleController {
 	@Autowired
 	private VehicleUpdater vehicleUpdater;
 
-	@PreAuthorize("hasAnyRole('admin', 'manager', 'employee', 'customer')")
+	@PreAuthorize("hasAnyRole('admin', 'manager', 'employee')")
 	@GetMapping("/")
 	public ResponseEntity<List<Vehicle>> getVehicles() {
 		List<Vehicle> vehicles = vehicleRepository.findAll();

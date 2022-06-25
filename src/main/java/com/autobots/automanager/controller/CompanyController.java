@@ -68,7 +68,7 @@ public class CompanyController {
 		return new ResponseEntity<HttpStatus>(HttpStatus.CREATED);
 	}
 
-	@PreAuthorize("hasAnyRole('admin', 'manager')")
+	@PreAuthorize("hasAnyRole('admin')")
 	@PutMapping("/update")
 	public ResponseEntity<HttpStatus> updateCompany(@RequestBody Company updatedCompany) {
 		Long id = updatedCompany.getId();
@@ -115,6 +115,7 @@ public class CompanyController {
 		return new ResponseEntity<HttpStatus>(HttpStatus.OK);
 	}
 
+	@PreAuthorize("hasAnyRole('admin', 'manager')")
 	@PutMapping("/addServiceToCompany/{companyId}")
 	public ResponseEntity<HttpStatus> addServiceToCompany(@PathVariable long companyId, @RequestBody Service service) {
 		Optional<Company> companyOptional = companyRepository.findById(companyId);
